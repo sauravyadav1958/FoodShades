@@ -30,6 +30,7 @@ Some of the features of FoodShades app are:
 - Set your delivery location on the app accurately.
 - Payment options include : <a href="https://www.npci.org.in/what-we-do/upi/product-overview">UPI</a> (Unified Payment Interface), <a href="https://developer.paytm.com/docs/v1/android-sdk/">Paytm</a>, <a href="https://razorpay.com/docs/#home-payments">Razorpay</a> and COD.
 - See and write reviews for food.
+- Help & Support page.
 - and more...
 
 # 📚 Major Libraries Used
@@ -39,9 +40,10 @@ Some of the features of FoodShades app are:
 - Glide - For Image Loading.
 - Paytm SDK - For Paytm Payment Integration.
 - Rozarpay API - For multiple payment options.
+- Liquid Swipe - Liquid animation welcome pages.
 - Lottie - To Display native `json` animations in android.
 - Smiley Rating Bar.
-- 
+
 # 💻 Build Instructions
 
 1. Clone or download the repository :
