@@ -16,6 +16,11 @@ FoodShades is an open source food ordering android application developed in **Ja
 # Demo
 https://github.com/TeraiyaAdesh/FoodShades/assets/97627129/aab10510-1e80-4672-9b3c-570e1fd74433
 
+<p align="left">
+  <img src="https://github.com/TeraiyaAdesh/FoodShades/assets/97627129/aab10510-1e80-4672-9b3c-570e1fd74433" alt="animated" width = 37%/>
+</p>
+
+
 
 
 
