@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">FoodShades</string>
+    <!-- <string name="facebook_app_id">995121671398048</string>
+    <string name="fb_login_protocol_schme">fb995121671398048</string>-->
+    <string name="we_will_send_you_an_one_time_otp_on_this_given_mobile_number">We will send you an one time otp on this given mobile number</string>
+    <string name="enter_your_mobile_number">Enter your mobile number</string>
+    <string name="otp_verification">OTP Verification</string>
+    <string name="logOutText">Log Out</string>
+    <string name="write_a_review">Write a review</string>
+    <string name="choose_your_payment_method">Choose Your Payment Method</string>
+    <string name="mapbox_access_token">pk.eyJ1IjoidGVyYWl5YWFkZXNoIiwiYSI6ImNsMDluMnRoMzBhaGEzam11MXE1eWUzdHIifQ.4hoNu6-UU26js07Bfui-Wg</string>
+
+    <!-- <string name="facebook_app_id">1234</string>
+    <string name="fb_login_protocol_scheme">fb1234</string>
+    <string name="facebook_client_token">56789</string>
+
+-->
+</resources>
