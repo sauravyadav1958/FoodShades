@@ -78,9 +78,10 @@ keytool -exportcert -list -v \
 ```
 MAPBOX_DOWNLOADS_TOKEN=REPLACE WITH YOUR OWN MAPBOX TOKEN
 ```
-9. Get your Github Personal Access Token and paste it in the `github.properties` file
+9. Get your Github User Id and Personal Access Token and paste it in the `github.properties` file
 ```
- gpr.usr=YOUR_GITHUB_USER_ID & gpr.key=YOUR_PERSONAL_ACCESS_TOKEN
+ gpr.usr=YOUR_GITHUB_USER_ID
+ gpr.key=YOUR_PERSONAL_ACCESS_TOKEN
 ```
 10. Setup a server which will generate a **CHECKSUM** Hash for the paytm sdk to work.After creating the server please paste the url which will return the **checksum** hash in the `CheckoutActivity.java` under the *ui/order* folder.Replace the GENERATE_CHECKSUM_URL with your own server url.
 
