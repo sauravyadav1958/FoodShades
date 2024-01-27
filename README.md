@@ -41,6 +41,57 @@ Some of the features of FoodShades app are:
 - Rozarpay API - For multiple payment options.
 - Lottie - To Display native `json` animations in android.
 - Smiley Rating Bar.
+- 
+# 💻 Build Instructions
+
+1. Clone or download the repository :
+
+```shell
+git clone https://github.com/TeraiyaAdesh/FoodShades.git
+```
+
+2. Import the project into Android Studio.
+
+3. Create a firebase project and add this android app to the project.
+
+4. Run the below command in the terminal to get your **SHA-1** key and upload it in the project settings in your firebase console, without this you cannot authenticate users using their phone numbers.
+
+```shell
+keytool -exportcert -list -v \
+-alias androiddebugkey -keystore ~/.android/debug.keystore
+```
+
+5. Enable Phone Number sign in Firebase Authentication Tab in the left side.
+
+6. Download and add the `google-services.json` file from the firebase project you created earlier and add it to the project under **app** folder.
+
+7. Get your Mapbox Token and paste it in the `strings.xml` file
+
+```
+<string name="mapbox_access_token">REPLACE WITH YOUR OWN MAPBOX TOKEN</string>
+```
+
+8. Also paste the token in the `gradle.properties` file
+
+```
+MAPBOX_DOWNLOADS_TOKEN=REPLACE WITH YOUR OWN MAPBOX TOKEN
+```
+
+9. Setup a server which will generate a **CHECKSUM** Hash for the paytm sdk to work.After creating the server please paste the url which will return the **checksum** hash in the `CheckoutActivity.java` under the *ui/order* folder.Replace the GENERATE_CHECKSUM_URL with your own server url.
+
+```java
+public class sendUserDetailToServer extends AsyncTask<ArrayList<String>, Void, String> {
+        private ProgressDialog dialog = new ProgressDialog(CheckoutActivity.this);
+        //private String orderId , mid, custid, amt;
+        String url ="GENERATE_CHECKSUM_URL";
+```
+
+10. Run the project into an emulator or a physical device.
+
+# 👨 Made By
+
+`Adesh Teraiya`
+
 
 
 
