@@ -14,6 +14,7 @@
 FoodShades is an open source food ordering android application developed in **Java** and **Kotlin**. FoodShades is mainly developed so I can improve my android development skills by building a real world application and experiment with different android components.
 
 # Demo
+https://github.com/TeraiyaAdesh/FoodShades/assets/97627129/aab10510-1e80-4672-9b3c-570e1fd74433
 
 
 
