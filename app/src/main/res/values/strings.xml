@@ -8,7 +8,8 @@
     <string name="logOutText">Log Out</string>
     <string name="write_a_review">Write a review</string>
     <string name="choose_your_payment_method">Choose Your Payment Method</string>
-    <string name="mapbox_access_token">pk.eyJ1IjoidGVyYWl5YWFkZXNoIiwiYSI6ImNsMDluMnRoMzBhaGEzam11MXE1eWUzdHIifQ.4hoNu6-UU26js07Bfui-Wg</string>
+    <string name="mapbox_access_token">pk.eyJ1Ijoic2F1cmF2MjAyNCIsImEiOiJjbTFmdTI2aHYxbXU2MmxzNnEzZDdjbHM0In0.O9PV_S8Jipzrf8eH7Xk9CA</string>
+    <string name="default_web_client_id">178492863790-a08jmt5k57b9q0rk53o1khdcmi04181v.apps.googleusercontent.com</string>
 
     <!-- <string name="facebook_app_id">1234</string>
     <string name="fb_login_protocol_scheme">fb1234</string>

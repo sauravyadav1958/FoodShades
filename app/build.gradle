@@ -15,8 +15,8 @@ android {
 
     defaultConfig {
         applicationId "com.example.project"
-        minSdk 21
-        targetSdk 30
+        minSdk 23
+        targetSdk 34
         versionCode 1
         versionName "1.0"
 
@@ -48,54 +48,55 @@ android {
 
 dependencies {
 
-    implementation 'androidx.appcompat:appcompat:1.4.1'
-    implementation 'com.google.android.material:material:1.5.0'
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
 
-    implementation 'androidx.constraintlayout:constraintlayout:2.1.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
 
 
-    testImplementation 'junit:junit:+'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation 'com.github.bumptech.glide:glide:4.12.0'
-    implementation 'com.google.code.gson:gson:2.8.7'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.2.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.6.1'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'com.github.bumptech.glide:glide:4.16.0'
+    implementation 'com.google.code.gson:gson:2.10.1'
     implementation  'de.hdodenhof:circleimageview:3.1.0'
     implementation 'com.airbnb.android:lottie:4.2.2'
-    implementation 'com.etebarian:meow-bottom-navigation:1.2.0'
+//    implementation 'com.etebarian:meow-bottom-navigation:1.3.1'
 
 
     implementation 'com.android.support:design:31.0.0'
-    implementation 'androidx.core:core:1.10.1'
+    implementation 'androidx.core:core:1.13.1'
 
     //Firebase
-    implementation 'com.google.firebase:firebase-database:20.0.3'
-    implementation 'com.google.firebase:firebase-firestore:24.0.0'
-    implementation 'com.google.firebase:firebase-storage:20.0.1'
+    implementation 'com.google.firebase:firebase-database:21.0.0'
+    implementation 'com.google.firebase:firebase-firestore:25.1.0'
+    implementation 'com.google.firebase:firebase-storage:21.0.0'
     implementation 'com.google.firebase:firebase-auth'
-    implementation 'com.google.firebase:firebase-auth:21.0.2'
-    implementation platform('com.google.firebase:firebase-bom:29.2.1')
-    implementation 'com.google.android.gms:play-services-auth:20.1.0'
+    implementation 'com.google.firebase:firebase-auth:23.0.0'
+    implementation platform('com.google.firebase:firebase-bom:33.3.0')
+    implementation 'com.google.android.gms:play-services-auth:21.2.0'
 
     implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.0'//MapBox
     implementation 'com.mapbox.mapboxsdk:mapbox-android-navigation:0.42.6'//MapBox Navigation
 
     //kotlin
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.8.22"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.23"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
-    implementation "androidx.core:core-ktx:1.12.0"
+    implementation "androidx.core:core-ktx:1.13.1"
     implementation "androidx.lifecycle:lifecycle-extensions:2.2.0"
 
     implementation 'com.cuberto:liquid-swipe:1.0.0'//Liquid Pages
   //  implementation 'com.github.Cuberto:liquid-swipe-android:Tag'
     implementation 'com.razorpay:checkout:1.6.18'
-    implementation 'com.myhexaville:smart-image-picker:1.0.4' //ImagePicker
-    implementation 'com.github.sujithkanna:smileyrating:2.0.0'//Smiley Rating Bar
+//    implementation 'com.myhexaville:smart-image-picker:1.0.4' //ImagePicker
+//    implementation 'com.github.sujithkanna:smileyrating:2.0.0'//Smiley Rating Bar
+    implementation 'me.zhanghai.android.materialratingbar:library:1.4.0'
     implementation 'de.hdodenhof:circleimageview:3.1.0'//CircleImageView
-    implementation 'com.github.bumptech.glide:glide:4.12.0' //Glide Image Loading
-    annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0' //Annotation Processor
-    implementation 'com.shreyaspatil:EasyUpiPayment:2.2'//UPI Payment
-    implementation('com.paytm:pgplussdk:1.4.4') {//Paytm Gateway Integration
-        transitive = true;
-    }
+    implementation 'com.github.bumptech.glide:glide:4.16.0' //Glide Image Loading
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.16.0' //Annotation Processor
+//    implementation 'com.shreyaspatil:EasyUpiPayment:2.2'//UPI Payment
+//    implementation('com.paytm:pgplussdk:1.4.4') {//Paytm Gateway Integration
+//        transitive = true;
+//    }
 }

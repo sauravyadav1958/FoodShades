@@ -1,33 +1,41 @@
 {
   "project_info": {
-    "project_number": "48658498459",
-    "project_id": "foodshades-72489",
-    "storage_bucket": "foodshades-72489.appspot.com"
+    "project_number": "178492863790",
+    "project_id": "food-delivery-67aec",
+    "storage_bucket": "food-delivery-67aec.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:48658498459:android:e57cb284412bbfb24d173e",
+        "mobilesdk_app_id": "1:178492863790:android:6b86f2880a188f713636bf",
         "android_client_info": {
           "package_name": "com.example.project"
         }
       },
       "oauth_client": [
         {
-          "client_id": "48658498459-us2oo45qv1voc79bsqdu7i8ni4em21i4.apps.googleusercontent.com",
+          "client_id": "178492863790-edt7m0kl0eml3bdilnkhg0snnpsuiaun.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.project",
+            "certificate_hash": "750e4095bc425676f358df474aac3bef3ba07718"
+          }
+        },
+        {
+          "client_id": "178492863790-a08jmt5k57b9q0rk53o1khdcmi04181v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCq1DWPUBhsyo7UBwTDtRGXsYr8yZcJm04"
+          "current_key": "AIzaSyCvuMUgEcC2XIpxS45w0DTaEUM5Itzo1ms"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "48658498459-us2oo45qv1voc79bsqdu7i8ni4em21i4.apps.googleusercontent.com",
+              "client_id": "178492863790-a08jmt5k57b9q0rk53o1khdcmi04181v.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

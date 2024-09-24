@@ -28,7 +28,7 @@
             android:textColor="@color/colorAccent"
             android:textSize="21sp" />
 
-        <com.hsalf.smileyrating.SmileyRating
+        <me.zhanghai.android.materialratingbar.MaterialRatingBar
             android:id="@+id/smiley_rating"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -72,11 +72,11 @@
             android:name=".Activity.ChangeLocationActivity"
             android:exported="true" />
 
-        <activity
-            android:name="com.paytm.pgsdk.PaytmPGActivity"
-            android:configChanges="keyboardHidden|orientation|keyboard"
-            android:exported="true"
-            android:screenOrientation="portrait" />
+<!--        <activity-->
+<!--            android:name="com.paytm.pgsdk.PaytmPGActivity"-->
+<!--            android:configChanges="keyboardHidden|orientation|keyboard"-->
+<!--            android:exported="true"-->
+<!--            android:screenOrientation="portrait" />-->
     </application>
 
 </manifest>

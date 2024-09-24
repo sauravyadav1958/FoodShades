@@ -25,12 +25,12 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.paytm.pgsdk.PaytmOrder;
-import com.paytm.pgsdk.PaytmPGService;
-import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
+//import com.paytm.pgsdk.PaytmOrder;
+//import com.paytm.pgsdk.PaytmPGService;
+//import com.paytm.pgsdk.PaytmPaymentTransactionCallback;
 import com.razorpay.Checkout;
-import com.shreyaspatil.EasyUpiPayment.listener.PaymentStatusListener;
-import com.shreyaspatil.EasyUpiPayment.model.TransactionDetails;
+//import com.shreyaspatil.EasyUpiPayment.listener.PaymentStatusListener;
+//import com.shreyaspatil.EasyUpiPayment.model.TransactionDetails;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -42,7 +42,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
 
-public class CheckoutActivity extends AppCompatActivity implements View.OnClickListener, PaymentStatusListener, PaytmPaymentTransactionCallback {
+public class CheckoutActivity extends AppCompatActivity implements View.OnClickListener/*, PaymentStatusListener, PaytmPaymentTransactionCallback*/ {
 
     public String TotalAmount;
     public LinearLayout mCODView,mCardView,mUpiView;
@@ -74,7 +74,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
         userAddress = getIntent().getStringExtra("USER_ADDRESS");
         resDelTime = getIntent().getStringExtra("DELIVERY_TIME");
         extraInst = getIntent().getStringExtra("EXTRA_INS");
-        uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
+//        uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
         userName = getIntent().getStringExtra("USER_NAME");
         userPhone = getIntent().getStringExtra("USER_PHONE");
         db = FirebaseFirestore.getInstance();
@@ -133,23 +133,25 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void showResPaymentMethods() {
-        DocumentReference restaurantRef = db.collection(USER_LIST).document(uid);
-        restaurantRef.get().addOnCompleteListener(task -> {
-            if (task.isSuccessful()){
-                DocumentSnapshot documentSnapshot = task.getResult();
-
+//        DocumentReference restaurantRef = db.collection(USER_LIST).document(uid);
+//        restaurantRef.get().addOnCompleteListener(task -> {
+//            if (task.isSuccessful()){
+//                DocumentSnapshot documentSnapshot = task.getResult();
+        mCODView = findViewById(R.id.cashMethodContainer);
+        mCardView = findViewById(R.id.creditCardMethodContainer);
+        mUpiView=  findViewById(R.id.upiMethodContainer);
                         mCODView.setVisibility(View.VISIBLE);
                         mCardView.setVisibility(View.VISIBLE);
                         mUpiView.setVisibility(View.VISIBLE);
                    //     upiID = upiPay;
-                    }else {
-                        mCODView.setVisibility(View.GONE);
-                        mCardView.setVisibility(View.GONE);
-                        mUpiView.setVisibility(View.GONE);
-                        upiID = "YES";
-                    }
-
-                });
+//                    }else {
+//                        mCODView.setVisibility(View.GONE);
+//                        mCardView.setVisibility(View.GONE);
+//                        mUpiView.setVisibility(View.GONE);
+//                        upiID = "YES";
+//                    }
+//
+//                });
 
             }
 
@@ -262,7 +264,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
             if (dialog.isShowing()) {
                 dialog.dismiss();
             }
-            PaytmPGService Service = PaytmPGService.getStagingService("YOUR_PAYTM_TEST_URL");
+//            PaytmPGService Service = PaytmPGService.getStagingService("YOUR_PAYTM_TEST_URL");
             // when app is ready to publish use production service
             // PaytmPGService  Service = PaytmPGService.getProductionService();
             // now call paytm service here
@@ -278,12 +280,12 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
             paramMap.put("CALLBACK_URL" ,verifyurl);
             paramMap.put("CHECKSUMHASH" ,CHECKSUMHASH);
             paramMap.put("INDUSTRY_TYPE_ID", "Retail");
-            PaytmOrder Order = new PaytmOrder(paramMap);
-            Log.e("checksum ", "param "+ paramMap.toString());
-            Service.initialize(Order,null);
-            // start payment service call here
-            Service.startPaymentTransaction(CheckoutActivity.this, true, true,
-                    CheckoutActivity.this);
+//            PaytmOrder Order = new PaytmOrder(paramMap);
+//            Log.e("checksum ", "param "+ paramMap.toString());
+//            Service.initialize(Order,null);
+//            // start payment service call here
+//            Service.startPaymentTransaction(CheckoutActivity.this, true, true,
+//                    CheckoutActivity.this);
         }
     }
 
@@ -352,75 +354,75 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
     }
 
 
-    @Override
-    public void onTransactionCompleted(TransactionDetails transactionDetails) {
-
-    }
-
-    @Override
-    public void onTransactionSuccess() {
-        uploadOrderDetails("PAID","");
-        deleteCartItems();
-        Toast.makeText(this, "Payment Successful", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onTransactionSubmitted() {
-
-    }
-
-    @Override
-    public void onTransactionFailed() {
-        Toast.makeText(this, "Transaction Has Failed!", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onTransactionCancelled() {
-        Toast.makeText(this, "Transaction Cancelled", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onAppNotFound() {
-        Toast.makeText(this, "NO UPI Apps Found On Your Device", Toast.LENGTH_SHORT).show();
-    }
-
-
-
-    @Override
-    public void onTransactionResponse(Bundle inResponse) {
-        uploadOrderDetails("PAID","");
-        deleteCartItems();
-    }
-
-    @Override
-    public void networkNotAvailable() {
-        Toast.makeText(this, "Network Not Available", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void clientAuthenticationFailed(String inErrorMessage) {
-        Toast.makeText(this, "Client Authentication Failed", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void someUIErrorOccurred(String inErrorMessage) {
-        Toast.makeText(this, "Error Occurred", Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onErrorLoadingWebPage(int iniErrorCode, String inErrorMessage, String inFailingUrl) {
-        Toast.makeText(this, "Transaction Failed", Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onBackPressedCancelTransaction() {
-        Toast.makeText(this, "Transaction Cancelled", Toast.LENGTH_SHORT).show();
-
-    }
-
-    @Override
-    public void onTransactionCancel(String inErrorMessage, Bundle inResponse) {
-        Toast.makeText(this, "Transaction Cancelled", Toast.LENGTH_SHORT).show();
-    }
+//    @Override
+//    public void onTransactionCompleted(TransactionDetails transactionDetails) {
+//
+//    }
+//
+//    @Override
+//    public void onTransactionSuccess() {
+//        uploadOrderDetails("PAID","");
+//        deleteCartItems();
+//        Toast.makeText(this, "Payment Successful", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onTransactionSubmitted() {
+//
+//    }
+//
+//    @Override
+//    public void onTransactionFailed() {
+//        Toast.makeText(this, "Transaction Has Failed!", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onTransactionCancelled() {
+//        Toast.makeText(this, "Transaction Cancelled", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onAppNotFound() {
+//        Toast.makeText(this, "NO UPI Apps Found On Your Device", Toast.LENGTH_SHORT).show();
+//    }
+//
+//
+//
+//    @Override
+//    public void onTransactionResponse(Bundle inResponse) {
+//        uploadOrderDetails("PAID","");
+//        deleteCartItems();
+//    }
+//
+//    @Override
+//    public void networkNotAvailable() {
+//        Toast.makeText(this, "Network Not Available", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void clientAuthenticationFailed(String inErrorMessage) {
+//        Toast.makeText(this, "Client Authentication Failed", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void someUIErrorOccurred(String inErrorMessage) {
+//        Toast.makeText(this, "Error Occurred", Toast.LENGTH_SHORT).show();
+//    }
+//
+//    @Override
+//    public void onErrorLoadingWebPage(int iniErrorCode, String inErrorMessage, String inFailingUrl) {
+//        Toast.makeText(this, "Transaction Failed", Toast.LENGTH_SHORT).show();
+//
+//    }
+//
+//    @Override
+//    public void onBackPressedCancelTransaction() {
+//        Toast.makeText(this, "Transaction Cancelled", Toast.LENGTH_SHORT).show();
+//
+//    }
+//
+//    @Override
+//    public void onTransactionCancel(String inErrorMessage, Bundle inResponse) {
+//        Toast.makeText(this, "Transaction Cancelled", Toast.LENGTH_SHORT).show();
+//    }
 }

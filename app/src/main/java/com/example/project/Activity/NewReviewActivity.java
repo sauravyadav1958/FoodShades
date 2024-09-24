@@ -20,7 +20,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.project.R;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.hsalf.smileyrating.SmileyRating;
+//import com.hsalf.smileyrating.SmileyRating;
 
 import java.util.HashMap;
 
@@ -31,7 +31,7 @@ public class NewReviewActivity extends AppCompatActivity {
     private String userImage;
     private String recommendText;
     private String resUid;
-    private SmileyRating ratingBar;
+//    private SmileyRating ratingBar;
     private EditText mReviewEditText;
     private RadioButton mRecommendBtn,mNotRecommendBtn;
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -51,7 +51,7 @@ public class NewReviewActivity extends AppCompatActivity {
     private void init() {
         uid = getIntent().getStringExtra("UID");
         db = FirebaseFirestore.getInstance();
-        ratingBar = findViewById(R.id.smiley_rating);
+//        ratingBar = findViewById(R.id.smiley_rating);
         mReviewEditText = findViewById(R.id.reviewEditText);
         ImageView mGoBackBtn = findViewById(R.id.cartBackBtn);
         mGoBackBtn.setOnClickListener(view -> {
@@ -69,7 +69,7 @@ public class NewReviewActivity extends AppCompatActivity {
 
 
     private void uploadReviewDetails() {
-        if (TextUtils.isEmpty(mReviewEditText.getText()) || ratingBar.getSelectedSmiley().getRating() == -1 || (!mRecommendBtn.isChecked() && !mNotRecommendBtn.isChecked())){
+        if (TextUtils.isEmpty(mReviewEditText.getText()) || /*ratingBar.getSelectedSmiley().getRating() == -1 ||*/ (!mRecommendBtn.isChecked() && !mNotRecommendBtn.isChecked())){
             Toast.makeText(this, "Please fill the review properly", Toast.LENGTH_SHORT).show();
         }else {
             if(mRecommendBtn.isChecked()){
@@ -77,14 +77,14 @@ public class NewReviewActivity extends AppCompatActivity {
             }else if(mNotRecommendBtn.isChecked()){
                 recommendText = "NO";
             }
-            int rating = ratingBar.getSelectedSmiley().getRating();
+//            int rating = ratingBar.getSelectedSmiley().getRating();
             String review = mReviewEditText.getText().toString();
 
             HashMap<String, String> uploadReviewMap = new HashMap<>();
           //  uploadReviewMap.put("user_name",userName);
           //  uploadReviewMap.put("user_image", userImage);
           //  uploadReviewMap.put("uid", uid);
-            uploadReviewMap.put("rating", String.valueOf(rating));
+//            uploadReviewMap.put("rating", String.valueOf(rating));
             uploadReviewMap.put("recommended", recommendText);
             uploadReviewMap.put("review", review);
 

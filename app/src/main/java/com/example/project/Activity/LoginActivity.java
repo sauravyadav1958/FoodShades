@@ -9,16 +9,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project.R;
 import com.example.project.databinding.ActivityLoginBinding;
+import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthCredential;
@@ -29,7 +33,7 @@ import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
 
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity implements GoogleApiClient.OnConnectionFailedListener{
     private Button phonebtn;
 
     Button btn;
@@ -38,6 +42,7 @@ public class LoginActivity extends AppCompatActivity {
     private static final int RC_SIGN_IN = 9001;
     private FirebaseAuth auth;
     private GoogleSignInClient mGoogleSignInClient;
+    private GoogleApiClient googleApiClient;
     EditText editTextTextEmailAddress;
     EditText editTextTextPassword2;
 
@@ -52,7 +57,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        EdgeToEdge.enable(this);
         editTextTextEmailAddress =(EditText) findViewById(R.id.editTextTextEmailAddress);
         editTextTextPassword2 =(EditText) findViewById(R.id.editTextTextPassword2);
         btnlogin = findViewById(R.id.btnlogin);
@@ -66,6 +71,11 @@ public class LoginActivity extends AppCompatActivity {
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .enableAutoManage(this, this)
+                .addApi(Auth.GOOGLE_SIGN_IN_API, gso)
+                .build();
         auth = FirebaseAuth.getInstance();
 
 
@@ -84,7 +94,8 @@ public class LoginActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                sign();
+//                sign();
+                updateUI(null);
             }
         });
 
@@ -124,7 +135,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void sign() {
-        Intent signInIntent = mGoogleSignInClient.getSignInIntent();
+        Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);;
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
     @Override
@@ -168,7 +179,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user) {
-        if(user !=null){
+        if(user ==null){
             Intent Intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(Intent);
             Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
@@ -176,7 +187,7 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
 
         }
-        if (auth.getCurrentUser()!=null)
+        if (auth.getCurrentUser()==null)
         {
             Intent intent = new Intent(this,MainActivity.class);
             startActivity(intent);
@@ -190,6 +201,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    @Override
+    public void onPointerCaptureChanged(boolean hasCapture) {
+        super.onPointerCaptureChanged(hasCapture);
+    }
 }
 
 
