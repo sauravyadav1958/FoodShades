@@ -1,5 +1,6 @@
 package com.example.project.Activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.widget.ImageView;
@@ -28,20 +29,22 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
 
 
-        ologo = findViewById(R.id.ologo);
-        splash = findViewById(R.id.splash);
-        app_name = findViewById(R.id.app_name);
-        lottieAnimationView = findViewById(R.id.lottie);
-        pager = findViewById(R.id.pager);
+//        ologo = findViewById(R.id.ologo);
+//        splash = findViewById(R.id.splash);
+//        app_name = findViewById(R.id.app_name);
+//        lottieAnimationView = findViewById(R.id.lottie);
+//        pager = findViewById(R.id.pager);
+//
+//
+//        splash.animate().translationY(-2100).setDuration(1000).setStartDelay(4000);
+//        ologo.animate().translationY(2200).setDuration(1000).setStartDelay(4000);
+//        app_name.animate().translationY(2200).setDuration(1000).setStartDelay(4000);
+//        lottieAnimationView.animate().translationY(1400).setDuration(1000).setStartDelay(4000);
 
-
-        splash.animate().translationY(-2100).setDuration(1000).setStartDelay(4000);
-        ologo.animate().translationY(2200).setDuration(1000).setStartDelay(4000);
-        app_name.animate().translationY(2200).setDuration(1000).setStartDelay(4000);
-        lottieAnimationView.animate().translationY(1400).setDuration(1000).setStartDelay(4000);
-
-        viewPager = new viewPager(getSupportFragmentManager(), 1);
-        pager.setAdapter(viewPager);
+//        viewPager = new viewPager(getSupportFragmentManager(), 1);
+//        pager.setAdapter(viewPager);
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
 
 
     }

@@ -24,7 +24,10 @@ public class ShowDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_detail);
-
+        ImageView mGoBackBtn = findViewById(R.id.cartBackBtn);
+        mGoBackBtn.setOnClickListener(view -> {
+            this.onBackPressed();
+        });
         managementCart = new ManagementCart(this);
 
         initView();
@@ -35,9 +38,9 @@ public class ShowDetailActivity extends AppCompatActivity {
         object = (FoodDomain) getIntent().getSerializableExtra("object");
 
         int drawableResourceId = this.getResources().getIdentifier(object.getPic(), "drawable", this.getPackageName());
-
+        String url = object.getPic();
         Glide.with(this)
-                .load(drawableResourceId)
+                .load(url)
                 .into(picFood);
 
         titleTxt.setText(object.getTitle());

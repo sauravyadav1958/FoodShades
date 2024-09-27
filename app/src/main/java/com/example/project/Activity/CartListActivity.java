@@ -62,7 +62,7 @@ public class CartListActivity extends AppCompatActivity {
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(CartListActivity.this, CartListActivity.class));
+//                startActivity(new Intent(CartListActivity.this, CartListActivity.class));
             }
         });
 

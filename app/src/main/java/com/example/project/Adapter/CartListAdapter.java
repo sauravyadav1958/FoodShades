@@ -46,9 +46,9 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
         holder.num.setText(String.valueOf(foodDomains.get(position).getNumberInCart()));
 
         int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(foodDomains.get(position).getPic(), "drawable", holder.itemView.getContext().getPackageName());
-
+        String url = foodDomains.get(position).getPic();
         Glide.with(holder.itemView.getContext())
-                .load(drawableResourceId)
+                .load(url)
                 .into(holder.pic);
 
 

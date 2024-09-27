@@ -31,6 +31,8 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="title"
+        android:maxLines="2"
+        android:maxWidth="140dp"
         android:textStyle="bold"
         android:textSize="18sp"
         android:textColor="#373b54"
