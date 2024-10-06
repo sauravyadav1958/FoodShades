@@ -1,11 +1,10 @@
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.MyProfileActivity"
+    android:background="@color/white"
     android:padding="27dp"
-    android:background="@color/white">
+    tools:context=".Fragment.MyProfileActivity">
 
     <TextView
         android:id="@+id/userProfileName"
@@ -13,7 +12,7 @@
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
         android:textColor="@color/colorAccent"
-        android:textSize="19sp"/>
+        android:textSize="19sp" />
 
     <TextView
         android:id="@+id/userProfileNumber"
@@ -43,8 +42,8 @@
         android:layout_below="@+id/userProfileAddressText"
         android:layout_marginTop="3dp"
         android:fontFamily="@font/open_sans"
-        android:textSize="14sp"
-        android:textColor="@color/gray"/>
+        android:textColor="@color/gray"
+        android:textSize="14sp" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/userProfileImage"
@@ -58,40 +57,40 @@
         android:id="@+id/dottedDivider"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:src="@drawable/dotted_divider"
-        android:layerType="software"
         android:layout_below="@id/userProfileImage"
         android:layout_marginTop="17dp"
-        android:layout_marginBottom="11dp"/>
+        android:layout_marginBottom="11dp"
+        android:layerType="software"
+        android:src="@drawable/dotted_divider" />
 
     <LinearLayout
         android:id="@+id/settingsContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/dottedDivider"
         android:orientation="horizontal"
-        android:weightSum="3"
-        android:layout_below="@+id/dottedDivider">
+        android:weightSum="3">
 
         <ImageView
             android:id="@+id/myOrdersImage"
             android:layout_width="0dp"
             android:layout_height="32dp"
-            android:src="@drawable/orders"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:src="@drawable/orders" />
 
         <ImageView
             android:id="@+id/changeAddressImage"
             android:layout_width="0dp"
             android:layout_height="32dp"
-            android:src="@drawable/address_book"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:src="@drawable/address_book" />
 
         <ImageView
             android:id="@+id/editProfile"
             android:layout_width="0dp"
             android:layout_height="32dp"
-            android:src="@drawable/edit_profile"
-            android:layout_weight="1"/>
+            android:layout_weight="1"
+            android:src="@drawable/edit_profile" />
 
     </LinearLayout>
 
@@ -99,40 +98,40 @@
         android:id="@+id/settingsTextContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:weightSum="3"
         android:layout_below="@+id/settingsContainer"
-        android:layout_marginTop="3dp">
+        android:layout_marginTop="3dp"
+        android:orientation="horizontal"
+        android:weightSum="3">
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/open_sans"
+            android:gravity="center"
             android:text="Orders"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:fontFamily="@font/open_sans"
             android:textColor="@color/gray"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/open_sans"
+            android:gravity="center"
             android:text="Change Address"
-            android:layout_weight="1"
-            android:gravity="center"
-            android:fontFamily="@font/open_sans"
             android:textColor="@color/gray"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
 
         <TextView
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Edit Profile"
             android:layout_weight="1"
-            android:gravity="center"
             android:fontFamily="@font/open_sans"
+            android:gravity="center"
+            android:text="Edit Profile"
             android:textColor="@color/gray"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
 
     </LinearLayout>
 
@@ -140,11 +139,11 @@
         android:id="@+id/dottedDivider1"
         android:layout_width="match_parent"
         android:layout_height="5dp"
-        android:src="@drawable/dotted_divider"
-        android:layerType="software"
         android:layout_below="@id/settingsTextContainer"
         android:layout_marginTop="17dp"
-        android:layout_marginBottom="11dp"/>
+        android:layout_marginBottom="11dp"
+        android:layerType="software"
+        android:src="@drawable/dotted_divider" />
 
     <TextView
         android:id="@+id/logOutText"

@@ -77,7 +77,7 @@
         android:layout_below="@+id/reviewContainer"
         android:background="@color/white"
         android:padding="11dp">
-
+<!--heading asking for recommendation-->
         <TextView
             android:id="@+id/recommendLabel"
             android:layout_width="wrap_content"

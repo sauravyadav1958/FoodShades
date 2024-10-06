@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar
+<androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    app:contentInsetLeft="0dp"
-    app:contentInsetStart="0dp"
     android:background="#ffffff"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    app:contentInsetLeft="0dp"
+    app:contentInsetStart="0dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -19,43 +18,43 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="15dp"
             android:src="@drawable/back_arrow" />
-
+        <!--TODO when it is visible in the application-->
         <TextView
             android:id="@+id/confirmOrderText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="9dp"
             android:layout_centerVertical="true"
-            android:textColor="@color/colorAccent"
-            android:textSize="19sp"
+            android:layout_marginStart="9dp"
+            android:layout_toEndOf="@+id/cartBackBtn"
             android:fontFamily="@font/open_sans_semibold"
-            android:layout_toEndOf="@+id/cartBackBtn"/>
-
+            android:textColor="@color/colorAccent"
+            android:textSize="19sp" />
+        <!--TODO when it is visible in the application-->
         <LinearLayout
             android:id="@+id/newReviewContainer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:orientation="horizontal"
-            android:layout_marginEnd="15dp"
             android:layout_centerVertical="true"
+            android:layout_marginEnd="15dp"
             android:background="@drawable/get_location_button_background"
+            android:orientation="horizontal"
             android:visibility="gone">
 
             <ImageView
                 android:layout_width="17dp"
                 android:layout_height="21dp"
-                android:src="@drawable/write_review"
-                android:layout_marginEnd="5dp"/>
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/write_review" />
 
             <TextView
                 android:id="@+id/newReviewText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/write_a_review"
-                android:textSize="15sp"
                 android:fontFamily="@font/open_sans"
-                android:textColor="@color/black"/>
+                android:text="@string/write_a_review"
+                android:textColor="@color/black"
+                android:textSize="15sp" />
 
         </LinearLayout>
 
