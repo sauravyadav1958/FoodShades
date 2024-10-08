@@ -237,6 +237,7 @@ eg : floating action buttons that hide on scroll-->
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/profilebtn"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -282,6 +283,7 @@ eg : floating action buttons that hide on scroll-->
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/support"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
@@ -304,6 +306,7 @@ eg : floating action buttons that hide on scroll-->
                 </LinearLayout>
 
                 <LinearLayout
+                    android:id="@+id/setting"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"

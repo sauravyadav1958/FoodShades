@@ -216,7 +216,6 @@
                     android:layout_marginBottom="30dp"
                     android:gravity="center"
                     android:text="Already Have Account? Login"
-                    android:onClick="login"
                     android:textColor="#090909"
                     android:textStyle="bold" />
 

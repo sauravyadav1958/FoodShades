@@ -32,12 +32,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private Button phonebtn;
+    private Button phoneNoBtn;
     ActivitySignUpBinding binding;
     private FirebaseAuth auth;
     FirebaseDatabase database;
     ProgressDialog progressDialog;
-    Button btn;
+    Button googleBtn;
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
 
@@ -55,24 +55,27 @@ public class SignUpActivity extends AppCompatActivity {
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         auth = FirebaseAuth.getInstance();
-
-        auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
         progressDialog = new ProgressDialog(SignUpActivity.this);
         progressDialog.setTitle("Creating Account");
         progressDialog.setMessage("We are creating your account");
-        phonebtn = findViewById(R.id.phonenumberbtn);
-        btn = findViewById(R.id.btnGoogle);
-        btn.setOnClickListener(new View.OnClickListener() {
+        phoneNoBtn = findViewById(R.id.phonenumberbtn);
+        googleBtn = findViewById(R.id.btnGoogle);
+        googleBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 sign();
-
             }
         });
 
+        binding.txtl.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+            }
+        });
 
-        phonebtn.setOnClickListener(new View.OnClickListener() {
+        phoneNoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Toast.makeText(SignUpActivity.this, "Login with otp", Toast.LENGTH_LONG).show();
@@ -80,49 +83,46 @@ public class SignUpActivity extends AppCompatActivity {
                 startActivity(Intent);
             }
         });
-
+// from binding we can access xml items directly
         binding.sbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 progressDialog.show();
 
                 auth.createUserWithEmailAndPassword
-                        (binding.editTextTextEmailAddress.getText().toString() , binding.editTextTextPassword2.getText().toString() ).
+                                (binding.editTextTextEmailAddress.getText().toString(), binding.editTextTextPassword2.getText().toString()).
                         addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        progressDialog.dismiss();
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                progressDialog.dismiss();
 
-                        if (task.isSuccessful()){
-                            Users user = new Users(binding.editTextTextPersonName.getText().toString(), binding.editTextTextEmailAddress.getText().toString(),
-                                    binding.editTextTextPassword2.getText().toString(),binding.editTextPhone.getText().toString());
+                                if (task.isSuccessful()) {
+                                    Users user = new Users(binding.editTextTextPersonName.getText().toString(), binding.editTextTextEmailAddress.getText().toString(),
+                                            binding.editTextTextPassword2.getText().toString(), binding.editTextPhone.getText().toString());
 
 
-                            FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
-                            String currentUserid= user1.getUid();
-                            database.getReference().child("Users").child(currentUserid).setValue(user);
+                                    FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
+                                    String currentUserid = user1.getUid();
+                                    database.getReference().child("Users").child(currentUserid).setValue(user);
 
-                            /*database = FirebaseDatabase.getInstance();*/
+                                    /*database = FirebaseDatabase.getInstance();*/
 
-                            Toast.makeText(SignUpActivity.this, "Sign Up Successfully", Toast.LENGTH_LONG).show();
-                        }
-                        else {
-                            Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
-                        }
-                    }
-                });
+                                    Toast.makeText(SignUpActivity.this, "Sign Up Successfully", Toast.LENGTH_LONG).show();
+                                } else {
+                                    Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            }
+                        });
             }
         });
 
     }
 
-    public void login(View view) {
-        startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
-    }
     private void sign() {
         Intent signInIntent = mGoogleSignInClient.getSignInIntent();
         startActivityForResult(signInIntent, RC_SIGN_IN);
     }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -164,17 +164,16 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void updateUI(FirebaseUser user) {
-        if(user !=null){
+        if (user != null) {
             Intent Intent = new Intent(SignUpActivity.this, MainActivity.class);
             startActivity(Intent);
             Toast.makeText(SignUpActivity.this, "Sign Up Successful", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             Toast.makeText(SignUpActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
 
         }
-        if (auth.getCurrentUser()!=null)
-        {
-            Intent intent = new Intent(SignUpActivity.this,MainActivity.class);
+        if (auth.getCurrentUser() != null) {
+            Intent intent = new Intent(SignUpActivity.this, MainActivity.class);
             startActivity(intent);
 
         }

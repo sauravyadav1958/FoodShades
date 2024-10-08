@@ -181,7 +181,6 @@
                     android:layout_marginTop="20dp"
                     android:layout_marginBottom="30dp"
                     android:gravity="center"
-                    android:onClick="signup"
                     android:text="Want to create Account? Sign Up"
                     android:textColor="#090909"
                     android:textStyle="bold" />

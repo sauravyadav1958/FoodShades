@@ -16,7 +16,8 @@ import com.example.project.Adapter.CartListAdapter;
 import com.example.project.Helper.ManagementCart;
 import com.example.project.Interface.ChangeNumberItemsListener;
 import com.example.project.R;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 public class CartListActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
@@ -27,25 +28,28 @@ public class CartListActivity extends AppCompatActivity {
     private ScrollView scrollView;
     private Button checkout;
     private String mTotalAmount;
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_list);
 
-      checkout = findViewById(R.id.checkoutbtn);
+        checkout = findViewById(R.id.checkoutbtn);
 
-      checkout.setOnClickListener(new View.OnClickListener() {
-           @Override
+        checkout.setOnClickListener(new View.OnClickListener() {
+            @Override
             public void onClick(View v) {
-
-               Intent intent = new Intent(getApplicationContext(), ChangeLocationActivity.class);
-               intent.putExtra("total", totalTxt.getText().toString());
-               startActivity(intent);
-
-
-           }
-      });
+                FirebaseUser user = auth.getCurrentUser();
+                if (user != null) {
+                    Intent intent = new Intent(getApplicationContext(), ChangeLocationActivity.class);
+                    intent.putExtra("total", totalTxt.getText().toString());
+                    startActivity(intent);
+                } else {
+                    startActivity(new Intent(getApplicationContext(), IntroActivity.class));
+                }
+            }
+        });
 
         managementCart = new ManagementCart(this);
 
@@ -91,6 +95,7 @@ public class CartListActivity extends AppCompatActivity {
 
 
     }
+
     private void initList() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewList.setLayoutManager(linearLayoutManager);
@@ -111,6 +116,7 @@ public class CartListActivity extends AppCompatActivity {
             scrollView.setVisibility(View.VISIBLE);
         }
     }
+
     // TODO understand calculateCard more after ManagementCart
     private void calculateCard() {
         double percentTax = 0.02;
@@ -126,11 +132,10 @@ public class CartListActivity extends AppCompatActivity {
         totalTxt.setText("Rs." + total);
 
 
-
-
     }
 
     private void initView() {
+        auth = FirebaseAuth.getInstance();
         recyclerViewList = findViewById(R.id.recyclerview);
         totalFeeTxt = findViewById(R.id.totalFeeTxt);
         taxTxt = findViewById(R.id.taxTxt);
@@ -140,7 +145,6 @@ public class CartListActivity extends AppCompatActivity {
         scrollView = findViewById(R.id.scrollView4);
 
     }
-
 
 
 }
