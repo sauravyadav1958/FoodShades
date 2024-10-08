@@ -18,10 +18,10 @@ import com.example.project.R;
 import java.util.ArrayList;
 
 public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHolder> {
-    ArrayList<FoodDomain> foodDomains;
+    ArrayList<FoodDomain> foodDomainList;
 
-    public PopularAdapter(ArrayList<FoodDomain> FoodDomains) {
-        this.foodDomains = FoodDomains;
+    public PopularAdapter(ArrayList<FoodDomain> foodDomainList) {
+        this.foodDomainList = foodDomainList;
     }
 
     @NonNull
@@ -34,10 +34,10 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHold
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.title.setText(foodDomains.get(position).getTitle());
-        holder.fee.setText(String.valueOf(foodDomains.get(position).getFee()));
-        String url = foodDomains.get(position).getPic();
-        int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(foodDomains.get(position).getPic(), "drawable", holder.itemView.getContext().getPackageName());
+        holder.title.setText(foodDomainList.get(position).getTitle());
+        holder.fee.setText(String.valueOf(foodDomainList.get(position).getFee()));
+        String url = foodDomainList.get(position).getPic();
+        int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(foodDomainList.get(position).getPic(), "drawable", holder.itemView.getContext().getPackageName());
 
         Glide.with(holder.itemView.getContext())
                 .load(url)
@@ -47,7 +47,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHold
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(holder.itemView.getContext(), ShowDetailActivity.class);
-                intent.putExtra("object", foodDomains.get(position));
+                intent.putExtra("object", foodDomainList.get(position));
                 holder.itemView.getContext().startActivity(intent);
             }
         });
@@ -57,7 +57,7 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-        return foodDomains.size();
+        return foodDomainList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

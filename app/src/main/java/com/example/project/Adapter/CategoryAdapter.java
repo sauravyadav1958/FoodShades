@@ -13,21 +13,19 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.project.Domain.CategoryDomain;
+import com.example.project.Domain.Category;
 import com.example.project.Domain.FoodDomain;
 import com.example.project.R;
 
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
-    ArrayList<CategoryDomain> categoryDomains;
+    ArrayList<Category> categoryList;
     private createDataParse createDataParse;
     Context context;
 
-    public CategoryAdapter(ArrayList<CategoryDomain> categoryDomains, Context context) {
-        this.categoryDomains = categoryDomains;
+    public CategoryAdapter(ArrayList<Category> categoryList, Context context) {
+        this.categoryList = categoryList;
         this.context = context;
         createDataParse = (createDataParse) this.context;
     }
@@ -42,11 +40,15 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.categoryName.setText(categoryDomains.get(position).getTitle());
+        holder.categoryName.setText(categoryList.get(position).getTitle());
         String picUrl = "";
         switch (position) {
             case 0: {
                 picUrl = "cat_1";
+                // ContextCompat: provides backwards-compatible versions of methods available in the Context class.
+                // older Android version compatibility support.
+                // holder.itemView.getContext(): For accessing the context for specific item
+                // within a RecyclerView adapter or view holder. (It puts a scope limit)
                 holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.category_background1));
                 break;
             }
@@ -71,8 +73,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 break;
             }
         }
+        // For getting ID from image name.
         int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(picUrl, "drawable", holder.itemView.getContext().getPackageName());
-
         Glide.with(holder.itemView.getContext())
                 .load(drawableResourceId)
                 .into(holder.categoryPic);
@@ -84,7 +86,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 if (currentCategoryPosition == position) {
                     return;
                 }
-                createDataParse.getCategoryFoods(categoryDomains, position);
+                createDataParse.getCategoryFoods(categoryList, position);
                 createDataParse.setCurrentCategoryPosition(position);
             }
         });
@@ -93,7 +95,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return categoryDomains.size();
+        return categoryList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -130,9 +132,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 //    }
 
     public interface createDataParse {
-        public void setFoodItems(ArrayList<FoodDomain> foodList);
+        public void setPopular(ArrayList<FoodDomain> foodList);
 
-        public void getCategoryFoods(ArrayList<CategoryDomain> categoryDomains, int position);
+        public void getCategoryFoods(ArrayList<Category> foodCategories, int position);
 
         public void setCurrentCategoryPosition(int position);
 

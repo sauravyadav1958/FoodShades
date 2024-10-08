@@ -56,15 +56,10 @@ public class CartListActivity extends AppCompatActivity {
     }
 
     private void bottomNavigation() {
-        FloatingActionButton floatingActionButton = findViewById(R.id.card_btn);
         LinearLayout homeBtn = findViewById(R.id.homeBtn);
-
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                startActivity(new Intent(CartListActivity.this, CartListActivity.class));
-            }
-        });
+        LinearLayout profileBtn = findViewById(R.id.profilebtn);
+        LinearLayout settingBtn = findViewById(R.id.setting);
+        LinearLayout supportBtn = findViewById(R.id.support);
 
         homeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,10 +67,34 @@ public class CartListActivity extends AppCompatActivity {
                 startActivity(new Intent(CartListActivity.this, MainActivity.class));
             }
         });
+
+        profileBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CartListActivity.this, ProfileActivity.class));
+            }
+        });
+
+        settingBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CartListActivity.this, SettingActivity.class));
+            }
+        });
+
+        supportBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(CartListActivity.this, SupportActivity.class));
+            }
+        });
+
+
     }
     private void initList() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewList.setLayoutManager(linearLayoutManager);
+        // TODO understand CartListAdapter more after ManagementCart
         adapter = new CartListAdapter(managementCart.getListCard(), this, new ChangeNumberItemsListener() {
             @Override
             public void changed() {
@@ -92,7 +111,7 @@ public class CartListActivity extends AppCompatActivity {
             scrollView.setVisibility(View.VISIBLE);
         }
     }
-
+    // TODO understand calculateCard more after ManagementCart
     private void calculateCard() {
         double percentTax = 0.02;
         double delivery = 10;
@@ -117,21 +136,11 @@ public class CartListActivity extends AppCompatActivity {
         taxTxt = findViewById(R.id.taxTxt);
         deliveryTxt = findViewById(R.id.deliveryTxt);
         totalTxt = findViewById(R.id.totalTxt);
-        emptyTxt = findViewById(R.id.emptyTxt);
+        emptyTxt = findViewById(R.id.emptyCart);
         scrollView = findViewById(R.id.scrollView4);
 
     }
-    public void profile(View view) {
-        startActivity(new Intent(CartListActivity.this, ProfileActivity.class));
-    }
 
-    public void support(View view) {
-        startActivity(new Intent(CartListActivity.this, SupportActivity.class));
-    }
-
-    public void setting(View view) {
-        startActivity(new Intent(CartListActivity.this, SettingActivity.class));
-    }
 
 
 }

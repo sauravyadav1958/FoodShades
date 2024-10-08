@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class ManagementCart {
     private Context context;
+    //    lightweight, simple key-value storage system for Android
     private TinyDB tinyDB;
 
     public ManagementCart(Context context) {

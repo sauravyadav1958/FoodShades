@@ -16,7 +16,7 @@ public class ShowDetailActivity extends AppCompatActivity {
     private TextView addToCardBtn;
     private TextView titleTxt, feeTxt, descriptionTxt, numberOrderTxt;
     private ImageView plusBtn, minusBtn, picFood;
-    private FoodDomain object;
+    private FoodDomain foodDomain;
     private int numberOrder = 1;
     private ManagementCart managementCart;
 
@@ -28,24 +28,36 @@ public class ShowDetailActivity extends AppCompatActivity {
         mGoBackBtn.setOnClickListener(view -> {
             this.onBackPressed();
         });
+        // TODO understand this later
         managementCart = new ManagementCart(this);
 
         initView();
         getBundle();
     }
 
-    private void getBundle() {
-        object = (FoodDomain) getIntent().getSerializableExtra("object");
+    private void initView() {
+        addToCardBtn = findViewById(R.id.addToCardBtn);
+        titleTxt = findViewById(R.id.titleTxt);
+        feeTxt = findViewById(R.id.priceTxt);
+        descriptionTxt = findViewById(R.id.descriptionTxt);
+        numberOrderTxt = findViewById(R.id.numberOrderTxt);
+        plusBtn = findViewById(R.id.plusBtn);
+        minusBtn = findViewById(R.id.minusBtn);
+        picFood = findViewById(R.id.foodPic);
+    }
 
-        int drawableResourceId = this.getResources().getIdentifier(object.getPic(), "drawable", this.getPackageName());
-        String url = object.getPic();
+    private void getBundle() {
+        foodDomain = (FoodDomain) getIntent().getSerializableExtra("object");
+
+        int drawableResourceId = this.getResources().getIdentifier(foodDomain.getPic(), "drawable", this.getPackageName());
+        String url = foodDomain.getPic();
         Glide.with(this)
                 .load(url)
                 .into(picFood);
 
-        titleTxt.setText(object.getTitle());
-        feeTxt.setText("Rs." + object.getFee());
-        descriptionTxt.setText(object.getDescription());
+        titleTxt.setText(foodDomain.getTitle());
+        feeTxt.setText("Rs." + foodDomain.getFee());
+        descriptionTxt.setText(foodDomain.getDescription());
         numberOrderTxt.setText(String.valueOf(numberOrder));
 
         plusBtn.setOnClickListener(new View.OnClickListener() {
@@ -69,20 +81,11 @@ public class ShowDetailActivity extends AppCompatActivity {
         addToCardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                object.setNumberInCart(numberOrder);
-                managementCart.insertFood(object);
+                foodDomain.setNumberInCart(numberOrder);
+                managementCart.insertFood(foodDomain);
             }
         });
     }
 
-    private void initView() {
-        addToCardBtn = findViewById(R.id.addToCardBtn);
-        titleTxt = findViewById(R.id.titleTxt);
-        feeTxt = findViewById(R.id.priceTxt);
-        descriptionTxt = findViewById(R.id.descriptionTxt);
-        numberOrderTxt = findViewById(R.id.numberOrderTxt);
-        plusBtn = findViewById(R.id.plusBtn);
-        minusBtn = findViewById(R.id.minusBtn);
-        picFood = findViewById(R.id.foodPic);
-    }
+
 }

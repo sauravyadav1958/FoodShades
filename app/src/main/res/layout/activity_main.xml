@@ -255,8 +255,7 @@
                    android:layout_width="0dp"
                    android:layout_height="match_parent"
                    android:layout_weight="0.2"
-                   android:orientation="vertical"
-                   android:onClick="profile">
+                   android:orientation="vertical">
 
                    <ImageView
                        android:id="@+id/imageprofile"
@@ -304,8 +303,7 @@
                    android:layout_width="0dp"
                    android:layout_height="match_parent"
                    android:layout_weight="0.2"
-                   android:orientation="vertical"
-                   android:onClick="support">
+                   android:orientation="vertical">
 
                    <ImageView
                        android:id="@+id/imagesupport"
@@ -328,8 +326,7 @@
                    android:layout_height="match_parent"
                    android:layout_weight="0.2"
                    android:orientation="vertical"
-                   android:id="@+id/setting"
-                   android:onClick="setting">
+                   android:id="@+id/setting">
 
                    <ImageView
                        android:id="@+id/imagesetting"

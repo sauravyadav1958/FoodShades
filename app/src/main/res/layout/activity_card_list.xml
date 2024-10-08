@@ -173,7 +173,7 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/emptyTxt"
+        android:id="@+id/emptyCart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Your Card Is Empty"
@@ -240,7 +240,6 @@ eg : floating action buttons that hide on scroll-->
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
-                    android:onClick="profile"
                     android:orientation="vertical">
 
                     <ImageView
@@ -286,7 +285,6 @@ eg : floating action buttons that hide on scroll-->
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
-                    android:onClick="support"
                     android:orientation="vertical">
 
                     <ImageView
@@ -309,7 +307,6 @@ eg : floating action buttons that hide on scroll-->
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.2"
-                    android:onClick="setting"
                     android:orientation="vertical">
 
                     <ImageView

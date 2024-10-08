@@ -1,10 +1,10 @@
 package com.example.project.Domain;
 
-public class CategoryDomain {
+public class Category {
     private String title;
     private String pic;
 
-    public CategoryDomain(String title, String pic) {
+    public Category(String title, String pic) {
         this.title = title;
         this.pic = pic;
     }
