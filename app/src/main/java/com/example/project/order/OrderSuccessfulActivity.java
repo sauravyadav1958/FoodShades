@@ -40,6 +40,7 @@ public class OrderSuccessfulActivity extends AppCompatActivity {
         mSuccessAnimation = findViewById(R.id.successAnim);
         mSuccessAnimation.setSpeed(0.8f);
         mSuccessAnimation.playAnimation();
+        // TODO this check purpose
         if(!mp.isPlaying()){
             mp.start();
         }else {
@@ -47,7 +48,7 @@ public class OrderSuccessfulActivity extends AppCompatActivity {
         }
         moveToOrdersScreen();
     }
-
+// TODO what is this doing
     private void changestatusbarcolor() {
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

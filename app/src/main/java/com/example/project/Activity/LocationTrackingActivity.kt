@@ -33,7 +33,7 @@ import com.mapbox.maps.plugin.locationcomponent.location
 import java.io.IOException
 import java.lang.ref.WeakReference
 import java.util.Locale
-
+// TODO this is temp Map
 class LocationTrackingActivity : AppCompatActivity() {
 
     var db: FirebaseFirestore = FirebaseFirestore.getInstance()

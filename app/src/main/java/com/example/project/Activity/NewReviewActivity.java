@@ -101,7 +101,7 @@ public class NewReviewActivity extends AppCompatActivity {
                     }
         
 
-
+// TODO what is this doing
     private void changestatusbarcolor() {
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);

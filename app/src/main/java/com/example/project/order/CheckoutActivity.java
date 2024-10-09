@@ -41,7 +41,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
-
+// TODO payment details not connected with backend
 public class CheckoutActivity extends AppCompatActivity implements View.OnClickListener/*, PaymentStatusListener, PaytmPaymentTransactionCallback*/ {
 
     public String TotalAmount;
@@ -89,9 +89,9 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
         textView.setText(String.format("Amount to be paid %s", getIntent().getStringExtra("total")));
         TotalAmount =  getIntent().getStringExtra("total");
         showResPaymentMethods();
-        mCODView = findViewById(R.id.cashMethodContainer);
-        mCardView = findViewById(R.id.creditCardMethodContainer);
-        mUpiView=  findViewById(R.id.upiMethodContainer);
+//        mCODView = findViewById(R.id.cashMethodContainer);
+//        mCardView = findViewById(R.id.creditCardMethodContainer);
+//        mUpiView=  findViewById(R.id.upiMethodContainer);
         mCODView.setOnClickListener(this);
         mCardView.setOnClickListener(this);
         mUpiView.setOnClickListener(this);
