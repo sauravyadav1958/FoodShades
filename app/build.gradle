@@ -76,10 +76,11 @@ dependencies {
     implementation 'com.google.firebase:firebase-auth:23.0.0'
     implementation platform('com.google.firebase:firebase-bom:33.3.0')
     implementation 'com.google.android.gms:play-services-auth:21.2.0'
-
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.0'//MapBox
-    implementation 'com.mapbox.mapboxsdk:mapbox-android-navigation:0.42.6'//MapBox Navigation
-
+    implementation 'com.squareup.retrofit2:retrofit:2.11.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
+//        implementation 'com.mapbox.mapboxsdk:mapbox-android-sdk:9.2.0'//MapBox
+//    implementation 'com.mapbox.mapboxsdk:mapbox-android-navigation:0.42.6'//MapBox Navigation
+    implementation 'com.mapbox.maps:android:11.7.0'
     //kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:1.9.23"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"

@@ -42,7 +42,7 @@ public class CartListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseUser user = auth.getCurrentUser();
                 if (user != null) {
-                    Intent intent = new Intent(getApplicationContext(), ChangeLocationActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), LocationTrackingActivity.class);
                     intent.putExtra("total", totalTxt.getText().toString());
                     startActivity(intent);
                 } else {
