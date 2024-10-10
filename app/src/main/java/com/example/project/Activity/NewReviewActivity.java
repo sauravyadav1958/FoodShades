@@ -41,7 +41,6 @@ public class NewReviewActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_review);
 
-        changestatusbarcolor();
         init();
 //        fetchUserDetails();
 
@@ -99,17 +98,5 @@ public class NewReviewActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Review Uploaded", Toast.LENGTH_SHORT).show();
                         }
                     }
-        
-
-// TODO what is this doing
-    private void changestatusbarcolor() {
-        Window window = this.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
-    }
 
 }

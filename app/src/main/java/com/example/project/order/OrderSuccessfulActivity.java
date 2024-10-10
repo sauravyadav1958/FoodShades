@@ -31,7 +31,6 @@ public class OrderSuccessfulActivity extends AppCompatActivity {
         setContentView(R.layout.activity_order_successful);
 
         init();
-        changestatusbarcolor();
     }
 
     private void init() {
@@ -46,16 +45,6 @@ public class OrderSuccessfulActivity extends AppCompatActivity {
         moveToOrdersScreen();
     }
 
-    // TODO what is this doing
-    private void changestatusbarcolor() {
-        Window window = this.getWindow();
-        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
-        window.setStatusBarColor(ContextCompat.getColor(this, R.color.white));
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR);
-        }
-    }
 
     private void moveToOrdersScreen() {
         new Handler().postDelayed(() -> {
