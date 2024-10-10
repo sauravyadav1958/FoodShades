@@ -14,7 +14,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project.Adapter.CartListAdapter;
 import com.example.project.Helper.ManagementCart;
-import com.example.project.Interface.ChangeNumberItemsListener;
 import com.example.project.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -99,13 +98,8 @@ public class CartListActivity extends AppCompatActivity {
     private void initList() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         recyclerViewList.setLayoutManager(linearLayoutManager);
-        // TODO understand CartListAdapter more after ManagementCart
-        adapter = new CartListAdapter(managementCart.getListCard(), this, new ChangeNumberItemsListener() {
-            @Override
-            public void changed() {
-                calculateCard();
-            }
-        });
+        adapter = new CartListAdapter(managementCart.getListCard(), this);
+        calculateCard();
 
         recyclerViewList.setAdapter(adapter);
         if (managementCart.getListCard().isEmpty()) {
@@ -117,7 +111,6 @@ public class CartListActivity extends AppCompatActivity {
         }
     }
 
-    // TODO understand calculateCard more after ManagementCart
     private void calculateCard() {
         double percentTax = 0.02;
         double delivery = 10;

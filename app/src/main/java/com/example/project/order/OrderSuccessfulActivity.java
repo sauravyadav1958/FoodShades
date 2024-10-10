@@ -35,20 +35,18 @@ public class OrderSuccessfulActivity extends AppCompatActivity {
     }
 
     private void init() {
-      //  resUid = getIntent().getStringExtra("RES_UID");
+        //  resUid = getIntent().getStringExtra("RES_UID");
         mp = MediaPlayer.create(this, R.raw.success_sound);
         mSuccessAnimation = findViewById(R.id.successAnim);
         mSuccessAnimation.setSpeed(0.8f);
         mSuccessAnimation.playAnimation();
-        // TODO this check purpose
-        if(!mp.isPlaying()){
-            mp.start();
-        }else {
-            mp.stop();
-        }
+
+        mp.start();
+
         moveToOrdersScreen();
     }
-// TODO what is this doing
+
+    // TODO what is this doing
     private void changestatusbarcolor() {
         Window window = this.getWindow();
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -64,6 +62,7 @@ public class OrderSuccessfulActivity extends AppCompatActivity {
             Intent intent = new Intent(OrderSuccessfulActivity.this, NewReviewActivity.class);
             intent.putExtra("RES_UID", resUid);
             startActivity(intent);
+            mp.stop();
             mp.reset();
             mp.release();
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

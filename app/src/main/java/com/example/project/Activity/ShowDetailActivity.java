@@ -28,7 +28,6 @@ public class ShowDetailActivity extends AppCompatActivity {
         mGoBackBtn.setOnClickListener(view -> {
             this.onBackPressed();
         });
-        // TODO understand this later
         managementCart = new ManagementCart(this);
 
         initView();

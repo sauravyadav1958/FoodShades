@@ -13,7 +13,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.project.Domain.FoodDomain;
 import com.example.project.Helper.ManagementCart;
-import com.example.project.Interface.ChangeNumberItemsListener;
 import com.example.project.R;
 
 import java.util.ArrayList;
@@ -21,13 +20,11 @@ import java.util.ArrayList;
 public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHolder> {
     private ArrayList<FoodDomain> foodDomains;
     private ManagementCart managementCart;
-    private ChangeNumberItemsListener changeNumberItemsListener;
 
-    public CartListAdapter(ArrayList<FoodDomain> FoodDomains, Context context, ChangeNumberItemsListener changeNumberItemsListener) {
+    public CartListAdapter(ArrayList<FoodDomain> FoodDomains, Context context) {
 
         this.foodDomains = FoodDomains;
         managementCart = new ManagementCart(context);
-        this.changeNumberItemsListener = changeNumberItemsListener;
     }
 
     @NonNull
@@ -55,26 +52,16 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
         holder.plusItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                managementCart.plusNumberFood(foodDomains, position, new ChangeNumberItemsListener() {
-                    @Override
-                    public void changed() {
-                        notifyDataSetChanged();
-                        changeNumberItemsListener.changed();
-                    }
-                });
+                managementCart.plusNumberFood(foodDomains, position);
+                notifyDataSetChanged();
             }
         });
 
         holder.minusItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                managementCart.MinusNumerFood(foodDomains, position, new ChangeNumberItemsListener() {
-                    @Override
-                    public void changed() {
-                        notifyDataSetChanged();
-                        changeNumberItemsListener.changed();
-                    }
-                });
+                managementCart.MinusNumerFood(foodDomains, position);
+                notifyDataSetChanged();
             }
         });
 
