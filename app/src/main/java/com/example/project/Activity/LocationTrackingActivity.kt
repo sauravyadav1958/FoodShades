@@ -30,7 +30,6 @@ import com.mapbox.maps.plugin.gestures.gestures
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorBearingChangedListener
 import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListener
 import com.mapbox.maps.plugin.locationcomponent.location
-import java.io.IOException
 import java.lang.ref.WeakReference
 import java.util.Locale
 // TODO this is temp Map
@@ -113,14 +112,21 @@ class LocationTrackingActivity : AppCompatActivity() {
         mapView.mapboxMap.loadStyle(
             Style.STANDARD
         ) {
-            try {
-                addresses = geocoder!!.getFromLocation(1.1, 2.0, 1)
-            } catch (e: IOException) {
-                e.printStackTrace()
-            }
+
             initLocationComponent()
             setupGesturesListener()
             mSaveLocationBtn!!.setOnClickListener { view: View? ->
+                if (mLocationText!!.text!!.isNotEmpty()) {
+                    addresses = geocoder!!.getFromLocationName(mLocationText!!.text.toString(), 1)
+                }
+                if (addresses != null && addresses!!.isNotEmpty()) {
+                    city = addresses!![0].locality
+                    postalCode = addresses!![0].postalCode
+                    knownName = addresses!![0].featureName
+                    subLocality = addresses!![0].subLocality
+                    val finalAddress = "$knownName, $subLocality, $city, $postalCode"
+                    mLocationText!!.setText(finalAddress)
+                }
                 mProgressDialog!!.setMessage("Updating Address, Please wait...")
                 mProgressDialog!!.show()
                 val updateLocMap: MutableMap<String, Any> =
@@ -159,19 +165,13 @@ class LocationTrackingActivity : AppCompatActivity() {
 
     private fun initLocationComponent() {
         val locationComponentPlugin = mapView.location
+
         locationComponentPlugin.updateSettings {
             puckBearing = PuckBearing.COURSE
             puckBearingEnabled = true
             enabled = true
 
-            if (addresses != null && addresses!!.isNotEmpty()) {
-                city = addresses!![0].locality
-                postalCode = addresses!![0].postalCode
-                knownName = addresses!![0].featureName
-                subLocality = addresses!![0].subLocality
-                val finalAddress = "$knownName, $subLocality, $city, $postalCode"
-                mLocationText!!.setText(finalAddress)
-            }
+
 
             locationPuck = LocationPuck2D(
                 bearingImage = ImageHolder.from(R.drawable.mapbox_user_puck_icon),
