@@ -184,7 +184,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
             });
             db.collection(USER_ORDERS).get().addOnCompleteListener(task -> {
             });
-
+// opens razorpayUI
             razorpay.open(CheckoutActivity.this, orderRequest);
             Intent intent =  new Intent(this, OrderSuccessfulActivity.class);
             startActivity(intent);
@@ -339,7 +339,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
             });
             db.collection(USER_ORDERS).get().addOnCompleteListener(task -> {
             });
-
+// opens razorpayUI
             razorpay.open(CheckoutActivity.this, orderRequest);
             Intent intent =  new Intent(this, OrderSuccessfulActivity.class);
             startActivity(intent);
