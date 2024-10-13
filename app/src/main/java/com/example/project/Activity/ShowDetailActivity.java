@@ -8,7 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.example.project.Domain.FoodDomain;
+import com.example.project.Domain.Food;
 import com.example.project.Helper.ManagementCart;
 import com.example.project.R;
 
@@ -16,7 +16,7 @@ public class ShowDetailActivity extends AppCompatActivity {
     private TextView addToCardBtn;
     private TextView titleTxt, feeTxt, descriptionTxt, numberOrderTxt;
     private ImageView plusBtn, minusBtn, picFood;
-    private FoodDomain foodDomain;
+    private Food food;
     private int numberOrder = 1;
     private ManagementCart managementCart;
 
@@ -46,17 +46,17 @@ public class ShowDetailActivity extends AppCompatActivity {
     }
 
     private void getBundle() {
-        foodDomain = (FoodDomain) getIntent().getSerializableExtra("object");
+        food = (Food) getIntent().getSerializableExtra("object");
 
-        int drawableResourceId = this.getResources().getIdentifier(foodDomain.getPic(), "drawable", this.getPackageName());
-        String url = foodDomain.getPic();
+        int drawableResourceId = this.getResources().getIdentifier(food.getImageUrl(), "drawable", this.getPackageName());
+        String url = food.getImageUrl();
         Glide.with(this)
                 .load(url)
                 .into(picFood);
 
-        titleTxt.setText(foodDomain.getTitle());
-        feeTxt.setText("Rs." + foodDomain.getFee());
-        descriptionTxt.setText(foodDomain.getDescription());
+        titleTxt.setText(food.getFoodName());
+        feeTxt.setText("Rs." + food.getFoodPrice());
+        descriptionTxt.setText(food.getDescription());
         numberOrderTxt.setText(String.valueOf(numberOrder));
 
         plusBtn.setOnClickListener(new View.OnClickListener() {
@@ -80,8 +80,8 @@ public class ShowDetailActivity extends AppCompatActivity {
         addToCardBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                foodDomain.setNumberInCart(numberOrder);
-                managementCart.insertFood(foodDomain);
+                food.setNumberInCart(numberOrder);
+                managementCart.insertFood(food);
             }
         });
     }

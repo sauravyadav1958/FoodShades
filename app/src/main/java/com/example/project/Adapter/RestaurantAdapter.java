@@ -1,6 +1,7 @@
 package com.example.project.Adapter;
 
 import android.content.Context;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,23 +10,22 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.project.Domain.Category;
-import com.example.project.Domain.FoodDomain;
+import com.example.project.Domain.Food;
+import com.example.project.Domain.Restaurant;
 import com.example.project.R;
 
 import java.util.ArrayList;
 
-public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHolder> {
-    ArrayList<Category> categoryList;
+public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.ViewHolder> {
+    ArrayList<Restaurant> restaurantList;
     private createDataParse createDataParse;
     Context context;
 
-    public CategoryAdapter(ArrayList<Category> categoryList, Context context) {
-        this.categoryList = categoryList;
+    public RestaurantAdapter(ArrayList<Restaurant> restaurantList, Context context) {
+        this.restaurantList = restaurantList;
         this.context = context;
         createDataParse = (createDataParse) this.context;
     }
@@ -40,44 +40,22 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.categoryName.setText(categoryList.get(position).getTitle());
-        String picUrl = "";
-        switch (position) {
-            case 0: {
-                picUrl = "cat_1";
-                // ContextCompat: provides backwards-compatible versions of methods available in the Context class.
-                // older Android version compatibility support.
-                // holder.itemView.getContext(): For accessing the context for specific item
-                // within a RecyclerView adapter or view holder. (It puts a scope limit)
-                holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.category_background1));
-                break;
-            }
-            case 1: {
-                picUrl = "cat_2";
-                holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.category_background2));
-                break;
-            }
-            case 2: {
-                picUrl = "cat_3";
-                holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.category_background3));
-                break;
-            }
-            case 3: {
-                picUrl = "cat_4";
-                holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.category_background4));
-                break;
-            }
-            case 4: {
-                picUrl = "cat_5";
-                holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.category_background5));
-                break;
-            }
-        }
+        holder.restaurantName.setText(restaurantList.get(position).getRestaurantName());
+
+        // ContextCompat: provides backwards-compatible versions of methods available in the Context class.
+        // older Android version compatibility support.
+        // holder.itemView.getContext(): For accessing the context for specific item
+        // within a RecyclerView adapter or view holder. (It puts a scope limit)
+//        holder.mainLayout.setBackground(ContextCompat.getDrawable(holder.itemView.getContext(), R.drawable.category_background1));
+
+
         // For getting ID from image name.
-        int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(picUrl, "drawable", holder.itemView.getContext().getPackageName());
+//        int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(picUrl, "drawable", holder.itemView.getContext().getPackageName());
+        Uri uri = Uri.parse(restaurantList.get(position).getImageUrl());
         Glide.with(holder.itemView.getContext())
-                .load(drawableResourceId)
-                .into(holder.categoryPic);
+                .load(uri)
+                .into(holder.restaurantPic);
+
         holder.itemView.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -86,7 +64,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
                 if (currentCategoryPosition == position) {
                     return;
                 }
-                createDataParse.getCategoryFoods(categoryList, position);
+                createDataParse.getRestaurantFoods(restaurantList, position);
                 createDataParse.setCurrentCategoryPosition(position);
             }
         });
@@ -95,18 +73,18 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return categoryList.size();
+        return restaurantList.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView categoryName;
-        ImageView categoryPic;
+        TextView restaurantName;
+        ImageView restaurantPic;
         ConstraintLayout mainLayout;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            categoryName = itemView.findViewById(R.id.categoryName);
-            categoryPic = itemView.findViewById(R.id.categoryPic);
+            restaurantName = itemView.findViewById(R.id.categoryName);
+            restaurantPic = itemView.findViewById(R.id.categoryPic);
             mainLayout = itemView.findViewById(R.id.mainLayout);
         }
 
@@ -132,9 +110,9 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.ViewHo
 //    }
 
     public interface createDataParse {
-        public void setPopular(ArrayList<FoodDomain> foodList);
+        public void setFoods(ArrayList<Food> foodList);
 
-        public void getCategoryFoods(ArrayList<Category> foodCategories, int position);
+        public void getRestaurantFoods(ArrayList<Restaurant> foodCategories, int position);
 
         public void setCurrentCategoryPosition(int position);
 

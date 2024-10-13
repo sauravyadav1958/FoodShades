@@ -11,18 +11,21 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project.Adapter.ApiService;
-import com.example.project.Adapter.CategoryAdapter;
-import com.example.project.Adapter.PopularAdapter;
-import com.example.project.Domain.Category;
-import com.example.project.Domain.FoodDomain;
+import com.example.project.Adapter.FoodAdapter;
+import com.example.project.Adapter.RestaurantAdapter;
+import com.example.project.Domain.Food;
+import com.example.project.Domain.Restaurant;
 import com.example.project.R;
 import com.example.project.databinding.ActivityMainBinding;
+import com.example.project.utils.Utils;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import retrofit2.Call;
@@ -31,18 +34,23 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class MainActivity extends AppCompatActivity implements CategoryAdapter.createDataParse {
+public class MainActivity extends AppCompatActivity implements RestaurantAdapter.createDataParse {
     //  ActivityMainBinding: efficient and safer way to interact with views,
 //  better alternative of findViewById() for layouts.
     ActivityMainBinding binding;
     FirebaseAuth auth;
     Button orderNow;
-    private RecyclerView.Adapter categoryAdapter, popularAdapter;
-    private RecyclerView categoryRecyclerView, popularRecyclerView;
-    ArrayList<Category> categoryList;
+    private RecyclerView.Adapter restaurantAdapter, foodAdapter;
+    private RecyclerView restaurantRecyclerView, foodRecyclerView;
+    ArrayList<Restaurant> restaurantList;
     private int currentCategoryPosition = 0;
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://api.spoonacular.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
+
+    Retrofit restaurantRetrofit = new Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:8080/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
@@ -62,9 +70,7 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.c
                 startActivity(new Intent(MainActivity.this, CartListActivity.class));
             }
         });
-
-        loadCategories();
-        loadPopularFoods();
+        loadRestaurants();
         bottomNavigation();
 
 
@@ -106,62 +112,138 @@ public class MainActivity extends AppCompatActivity implements CategoryAdapter.c
 
     }
 
-    private void loadPopularFoods() {
+    private void loadRestaurantFoods() {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        popularRecyclerView = findViewById(R.id.recyclerView2);
-        popularRecyclerView.setLayoutManager(linearLayoutManager);
-        getCategoryFoods(categoryList, 0);
+        foodRecyclerView = findViewById(R.id.recyclerView2);
+        foodRecyclerView.setLayoutManager(linearLayoutManager);
+        getRestaurantFoods(restaurantList, 0);
 
     }
 
-    private void loadCategories() {
+    private void loadRestaurants() {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        categoryRecyclerView = findViewById(R.id.recyclerView);
-        categoryRecyclerView.setLayoutManager(linearLayoutManager);
+        restaurantRecyclerView = findViewById(R.id.recyclerView);
+        restaurantRecyclerView.setLayoutManager(linearLayoutManager);
 
-        categoryList = new ArrayList<>();
-        categoryList.add(new Category("Pizza", "cat_1"));
-        categoryList.add(new Category("Burger", "cat_2"));
-        categoryList.add(new Category("Hot dog", "cat_3"));
-        categoryList.add(new Category("Drink", "cat_4"));
-        categoryList.add(new Category("Donut", "cat_5"));
+        restaurantList = new ArrayList<>();
+        ApiService apiService = restaurantRetrofit.create(ApiService.class);
+        Call<JsonArray> restaurantJsonObject = apiService.getAllRestaurants();
+        restaurantJsonObject.enqueue(new Callback<JsonArray>() {
+            @Override
+            public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
+                JsonArray restaurants = response.body();
+                for (JsonElement restaurant : restaurants) {
+                    String restaurantId = restaurant.getAsJsonObject().get("restaurantId").getAsString();
+                    String restaurantName = restaurant.getAsJsonObject().get("restaurantName").getAsString();
+                    String imageUrl = restaurant.getAsJsonObject().get("imageUrl").getAsString();
+                    restaurantList.add(new Restaurant(restaurantId, imageUrl, restaurantName));
 
-        categoryAdapter = new CategoryAdapter(categoryList, MainActivity.this);
-        categoryRecyclerView.setAdapter(categoryAdapter);
+                }
+                restaurantAdapter = new RestaurantAdapter(restaurantList, MainActivity.this);
+                restaurantRecyclerView.setAdapter(restaurantAdapter);
+                loadRestaurantFoods();
+            }
+
+            @Override
+            public void onFailure(Call<JsonArray> call, Throwable t) {
+                getOfflineRestaurants();
+            }
+        });
+
     }
 
-    public void setPopular(ArrayList<FoodDomain> foodList) {
-        popularAdapter = new PopularAdapter(foodList);
-        popularRecyclerView.setAdapter(popularAdapter);
+    public void setFoods(ArrayList<Food> foodList) {
+        foodAdapter = new FoodAdapter(foodList);
+        foodRecyclerView.setAdapter(foodAdapter);
     }
 
-    public void getCategoryFoods(ArrayList<Category> foodCategories, int position) {
-        String category = foodCategories.get(position).getTitle();
-//        String url = "https://api.spoonacular.com/food/menuItems/search?apiKey=96cc2859945c4256aee0b9dbd3865603&query=" + category + "&number=5";
-        ApiService apiService = retrofit.create(ApiService.class);
-        String limit = "5";
-        Call<JsonObject> foodJsonObject = apiService.getFoodItems("96cc2859945c4256aee0b9dbd3865603", category, limit);
+    public void getRestaurantFoods(ArrayList<Restaurant> restaurantList, int position) {
+        String restaurantId = restaurantList.get(position).getId();
+        ApiService apiService = restaurantRetrofit.create(ApiService.class);
+        Call<JsonObject> foodJsonObject = apiService.getRestaurant(restaurantId);
         foodJsonObject.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                ArrayList<FoodDomain> foodList = new ArrayList<>();
-                JsonArray foodItems = response.body().getAsJsonArray("menuItems");
-                for (JsonElement track : foodItems) {
-                    String title = track.getAsJsonObject().get("title").getAsString();
-                    String pic = track.getAsJsonObject().get("image").getAsString();
-                    foodList.add(new FoodDomain(title, pic, "random long description for current food, tasty and healthy as well", 199.00));
-                }
-                setPopular(foodList);
+                if (response.raw().code() == 302) {
+                    String restaurant = "";
+                    try {
+                        ArrayList<Food> foodList = new ArrayList<>();
+                        restaurant = response.errorBody().string();
+                        Gson gson = new Gson();
+                        JsonObject jsonObject = gson.fromJson(restaurant, JsonObject.class);
+                        JsonArray foodListJsonArray = jsonObject.getAsJsonArray("foodList");
 
+                        for (JsonElement food : foodListJsonArray) {
+                            String foodName = food.getAsJsonObject().get("foodName").getAsString();
+                            String imageUrl = food.getAsJsonObject().get("imageUrl").getAsString();
+                            String foodDescription = food.getAsJsonObject().get("description").getAsString();
+                            double foodPrice = food.getAsJsonObject().get("foodPrice").getAsDouble();
+                            foodList.add(new Food(foodName, imageUrl, foodDescription, foodPrice));
+                        }
+                        setFoods(foodList);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                } else {
+                    ArrayList<Food> foodList = new ArrayList<>();
+                    JsonArray foodListJsonArray = response.body().getAsJsonObject("foodList").getAsJsonArray();
+                    for (JsonElement food : foodListJsonArray) {
+                        String foodName = food.getAsJsonObject().get("foodName").getAsString();
+                        String imageUrl = food.getAsJsonObject().get("imageUrl").getAsString();
+                        String foodDescription = food.getAsJsonObject().get("description").getAsString();
+                        double foodPrice = food.getAsJsonObject().get("foodPrice").getAsDouble();
+                        foodList.add(new Food(foodName, imageUrl, foodDescription, foodPrice));
+                    }
+                    setFoods(foodList);
+                }
             }
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-
+                getOfflineFoodItems(restaurantId);
             }
         });
     }
+
+
+    private void getOfflineRestaurants() {
+        Gson gson = new Gson();
+        JsonArray restaurants = gson.fromJson(Utils.restaurants, JsonArray.class);
+        for (JsonElement restaurant : restaurants) {
+            String restaurantId = restaurant.getAsJsonObject().get("restaurantId").getAsString();
+            String restaurantName = restaurant.getAsJsonObject().get("restaurantName").getAsString();
+            String imageUrl = restaurant.getAsJsonObject().get("imageUrl").getAsString();
+            restaurantList.add(new Restaurant(restaurantId, imageUrl, restaurantName));
+
+        }
+        restaurantAdapter = new RestaurantAdapter(restaurantList, MainActivity.this);
+        restaurantRecyclerView.setAdapter(restaurantAdapter);
+        loadRestaurantFoods();
+    }
+
+    private void getOfflineFoodItems(String restaurantId) {
+        ArrayList<Food> foodList = new ArrayList<>();
+        Gson gson = new Gson();
+        JsonArray restaurants = gson.fromJson(Utils.restaurants, JsonArray.class);
+        for (JsonElement restaurant : restaurants) {
+            String id = restaurant.getAsJsonObject().get("restaurantId").getAsString();
+            if (id.equals(restaurantId)) {
+                JsonArray foodListJsonArray = restaurant.getAsJsonObject().get("foodList").getAsJsonArray();
+                for (JsonElement food : foodListJsonArray) {
+                    String foodName = food.getAsJsonObject().get("foodName").getAsString();
+                    String imageUrl = food.getAsJsonObject().get("imageUrl").getAsString();
+                    String foodDescription = food.getAsJsonObject().get("description").getAsString();
+                    double foodPrice = food.getAsJsonObject().get("foodPrice").getAsDouble();
+                    foodList.add(new Food(foodName, imageUrl, foodDescription, foodPrice));
+                }
+                setFoods(foodList);
+            }
+        }
+
+    }
+
 
     public void setCurrentCategoryPosition(int position) {
         currentCategoryPosition = position;

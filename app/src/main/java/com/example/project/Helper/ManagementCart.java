@@ -3,7 +3,7 @@ package com.example.project.Helper;
 import android.content.Context;
 import android.widget.Toast;
 
-import com.example.project.Domain.FoodDomain;
+import com.example.project.Domain.Food;
 
 import java.util.ArrayList;
 
@@ -18,12 +18,12 @@ public class ManagementCart {
     }
 
     // If item alreadyExist just update the quantity else insert the newItem
-    public void insertFood(FoodDomain item) {
-        ArrayList<FoodDomain> listFood = getListCard();
+    public void insertFood(Food item) {
+        ArrayList<Food> listFood = getListCard();
         boolean existAlready = false;
         int n = 0;
         for (int i = 0; i < listFood.size(); i++) {
-            if (listFood.get(i).getTitle().equals(item.getTitle())) {
+            if (listFood.get(i).getFoodName().equals(item.getFoodName())) {
                 existAlready = true;
                 n = i;
                 break;
@@ -41,17 +41,17 @@ public class ManagementCart {
 
     }
 
-    public ArrayList<FoodDomain> getListCard() {
+    public ArrayList<Food> getListCard() {
         return tinyDB.getListObject("CardList");
     }
 
     // increment the number of quantity, notify the listener
-    public void plusNumberFood(ArrayList<FoodDomain> listfood, int position) {
+    public void plusNumberFood(ArrayList<Food> listfood, int position) {
         listfood.get(position).setNumberInCart(listfood.get(position).getNumberInCart() + 1);
         tinyDB.putListObject("CardList", listfood);
     }
     // decrement the number of quantity (remove if qty is 1), notify the listener
-    public void MinusNumerFood(ArrayList<FoodDomain> listfood, int position) {
+    public void MinusNumerFood(ArrayList<Food> listfood, int position) {
         if (listfood.get(position).getNumberInCart() == 1) {
             listfood.remove(position);
         } else {
@@ -61,10 +61,10 @@ public class ManagementCart {
     }
 
     public Double getTotalFee() {
-        ArrayList<FoodDomain> listFood = getListCard();
+        ArrayList<Food> listFood = getListCard();
         double fee = 0;
         for (int i = 0; i < listFood.size(); i++) {
-            fee = fee + (listFood.get(i).getFee() * listFood.get(i).getNumberInCart());
+            fee = fee + (listFood.get(i).getFoodPrice() * listFood.get(i).getNumberInCart());
         }
         return fee;
     }

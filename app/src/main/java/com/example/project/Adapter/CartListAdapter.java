@@ -11,19 +11,19 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.example.project.Domain.FoodDomain;
+import com.example.project.Domain.Food;
 import com.example.project.Helper.ManagementCart;
 import com.example.project.R;
 
 import java.util.ArrayList;
 
 public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHolder> {
-    private ArrayList<FoodDomain> foodDomains;
+    private ArrayList<Food> foods;
     private ManagementCart managementCart;
 
-    public CartListAdapter(ArrayList<FoodDomain> FoodDomains, Context context) {
+    public CartListAdapter(ArrayList<Food> foods, Context context) {
 
-        this.foodDomains = FoodDomains;
+        this.foods = foods;
         managementCart = new ManagementCart(context);
     }
 
@@ -37,13 +37,13 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.title.setText(foodDomains.get(position).getTitle());
-        holder.feeEachItem.setText(String.valueOf(foodDomains.get(position).getFee()));
-        holder.totalEachItem.setText(String.valueOf(Math.round((foodDomains.get(position).getNumberInCart() * foodDomains.get(position).getFee()) * 100.0) / 100.0));
-        holder.num.setText(String.valueOf(foodDomains.get(position).getNumberInCart()));
+        holder.title.setText(foods.get(position).getFoodName());
+        holder.feeEachItem.setText(String.valueOf(foods.get(position).getFoodPrice()));
+        holder.totalEachItem.setText(String.valueOf(Math.round((foods.get(position).getNumberInCart() * foods.get(position).getFoodPrice()) * 100.0) / 100.0));
+        holder.num.setText(String.valueOf(foods.get(position).getNumberInCart()));
 
-        int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(foodDomains.get(position).getPic(), "drawable", holder.itemView.getContext().getPackageName());
-        String url = foodDomains.get(position).getPic();
+        int drawableResourceId = holder.itemView.getContext().getResources().getIdentifier(foods.get(position).getImageUrl(), "drawable", holder.itemView.getContext().getPackageName());
+        String url = foods.get(position).getImageUrl();
         Glide.with(holder.itemView.getContext())
                 .load(url)
                 .into(holder.pic);
@@ -52,7 +52,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
         holder.plusItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                managementCart.plusNumberFood(foodDomains, position);
+                managementCart.plusNumberFood(foods, position);
                 notifyDataSetChanged();
             }
         });
@@ -60,7 +60,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
         holder.minusItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                managementCart.MinusNumerFood(foodDomains, position);
+                managementCart.MinusNumerFood(foods, position);
                 notifyDataSetChanged();
             }
         });
@@ -70,7 +70,7 @@ public class CartListAdapter extends RecyclerView.Adapter<CartListAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return foodDomains.size();
+        return foods.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
