@@ -13,10 +13,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project.Adapter.CartListAdapter;
+import com.example.project.Domain.Food;
 import com.example.project.Helper.ManagementCart;
 import com.example.project.R;
+import com.example.project.order.CheckoutActivity;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+
+import java.util.ArrayList;
 
 public class CartListActivity extends AppCompatActivity {
     private RecyclerView.Adapter adapter;
@@ -41,8 +45,20 @@ public class CartListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseUser user = auth.getCurrentUser();
                 if (user != null) {
-                    Intent intent = new Intent(getApplicationContext(), LocationTrackingActivity.class);
-                    intent.putExtra("total", totalTxt.getText().toString());
+                    Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
+
+                    Bundle bundle = new Bundle();
+
+                    bundle.putString("total", totalTxt.getText().toString());
+                    bundle.putDouble("amount", Double.parseDouble(totalFeeTxt.getText().toString().replace("Rs.", "")));
+                    bundle.putString("taxTxt", taxTxt.getText().toString());
+                    bundle.putString("deliveryTxt", deliveryTxt.getText().toString());
+                    bundle.putSerializable("restaurant", getIntent().getSerializableExtra("restaurant"));
+
+                    ArrayList<Food> food = managementCart.getListCard();
+                    bundle.putSerializable("foodList", food);
+                    intent.putExtras(bundle);
+
                     startActivity(intent);
                 } else {
                     startActivity(new Intent(getApplicationContext(), IntroActivity.class));

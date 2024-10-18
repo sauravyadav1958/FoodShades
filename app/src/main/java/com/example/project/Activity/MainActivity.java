@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     private RecyclerView.Adapter restaurantAdapter, foodAdapter;
     private RecyclerView restaurantRecyclerView, foodRecyclerView;
     ArrayList<Restaurant> restaurantList;
-    private int currentCategoryPosition = 0;
+    private int currentRestaurantPosition = 0;
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://api.spoonacular.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -85,7 +85,11 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this, CartListActivity.class));
+                Intent intent = new Intent(MainActivity.this, CartListActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putSerializable("restaurant", restaurantList.get(currentRestaurantPosition));
+                intent.putExtras(bundle);
+                startActivity(intent);
             }
         });
 
@@ -134,7 +138,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
             public void onResponse(Call<JsonArray> call, Response<JsonArray> response) {
                 JsonArray restaurants = response.body();
                 for (JsonElement restaurant : restaurants) {
-                    String restaurantId = restaurant.getAsJsonObject().get("restaurantId").getAsString();
+                    Long restaurantId = restaurant.getAsJsonObject().get("restaurantId").getAsLong();
                     String restaurantName = restaurant.getAsJsonObject().get("restaurantName").getAsString();
                     String imageUrl = restaurant.getAsJsonObject().get("imageUrl").getAsString();
                     restaurantList.add(new Restaurant(restaurantId, imageUrl, restaurantName));
@@ -159,7 +163,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     }
 
     public void getRestaurantFoods(ArrayList<Restaurant> restaurantList, int position) {
-        String restaurantId = restaurantList.get(position).getId();
+
+        Long restaurantId = restaurantList.get(position).getId();
         ApiService apiService = restaurantRetrofit.create(ApiService.class);
         Call<JsonObject> foodJsonObject = apiService.getRestaurant(restaurantId);
         foodJsonObject.enqueue(new Callback<JsonObject>() {
@@ -212,7 +217,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         Gson gson = new Gson();
         JsonArray restaurants = gson.fromJson(Utils.restaurants, JsonArray.class);
         for (JsonElement restaurant : restaurants) {
-            String restaurantId = restaurant.getAsJsonObject().get("restaurantId").getAsString();
+            Long restaurantId = restaurant.getAsJsonObject().get("restaurantId").getAsLong();
             String restaurantName = restaurant.getAsJsonObject().get("restaurantName").getAsString();
             String imageUrl = restaurant.getAsJsonObject().get("imageUrl").getAsString();
             restaurantList.add(new Restaurant(restaurantId, imageUrl, restaurantName));
@@ -223,7 +228,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         loadRestaurantFoods();
     }
 
-    private void getOfflineFoodItems(String restaurantId) {
+    private void getOfflineFoodItems(Long restaurantId) {
         ArrayList<Food> foodList = new ArrayList<>();
         Gson gson = new Gson();
         JsonArray restaurants = gson.fromJson(Utils.restaurants, JsonArray.class);
@@ -245,11 +250,11 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
     }
 
 
-    public void setCurrentCategoryPosition(int position) {
-        currentCategoryPosition = position;
+    public void setCurrentRestaurantPosition(int position) {
+        currentRestaurantPosition = position;
     }
 
-    public int getCurrentCategoryPosition() {
-        return currentCategoryPosition;
+    public int getCurrentRestaurantPosition() {
+        return currentRestaurantPosition;
     }
 }

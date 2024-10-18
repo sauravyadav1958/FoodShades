@@ -60,12 +60,12 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
             @Override
             public void onClick(View v) {
-                int currentCategoryPosition = createDataParse.getCurrentCategoryPosition();
+                int currentCategoryPosition = createDataParse.getCurrentRestaurantPosition();
                 if (currentCategoryPosition == position) {
                     return;
                 }
                 createDataParse.getRestaurantFoods(restaurantList, position);
-                createDataParse.setCurrentCategoryPosition(position);
+                createDataParse.setCurrentRestaurantPosition(position);
             }
         });
 
@@ -114,8 +114,8 @@ public class RestaurantAdapter extends RecyclerView.Adapter<RestaurantAdapter.Vi
 
         public void getRestaurantFoods(ArrayList<Restaurant> foodCategories, int position);
 
-        public void setCurrentCategoryPosition(int position);
+        public void setCurrentRestaurantPosition(int position);
 
-        public int getCurrentCategoryPosition();
+        public int getCurrentRestaurantPosition();
     }
 }

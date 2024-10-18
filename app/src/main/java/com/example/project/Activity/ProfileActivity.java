@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project.R;
 import com.google.firebase.auth.FirebaseAuth;
+import com.razorpay.Checkout;
 
 public class ProfileActivity extends AppCompatActivity {
 
@@ -30,9 +31,11 @@ public class ProfileActivity extends AppCompatActivity {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // TODO erase customer data from the app before logout -> is it working ?
+                Checkout.clearUserData(getApplicationContext());
                 auth.signOut();
                 FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(ProfileActivity.this,LoginActivity.class);
+                Intent intent = new Intent(ProfileActivity.this, LoginActivity.class);
                 startActivity(intent);
                 finish();
             }
