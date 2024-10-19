@@ -45,7 +45,7 @@ public class CartListActivity extends AppCompatActivity {
             public void onClick(View v) {
                 FirebaseUser user = auth.getCurrentUser();
                 if (user != null) {
-                    Intent intent = new Intent(getApplicationContext(), CheckoutActivity.class);
+                    Intent intent = new Intent(getApplicationContext(), LocationTrackingActivity.class);
 
                     Bundle bundle = new Bundle();
 

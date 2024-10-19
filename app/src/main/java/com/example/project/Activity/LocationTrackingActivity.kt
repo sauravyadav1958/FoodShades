@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.location.Address
 import android.location.Geocoder
+import android.location.Location
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
@@ -13,6 +14,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.project.R
 import com.example.project.order.CheckoutActivity
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.tasks.Task
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,10 +35,12 @@ import com.mapbox.maps.plugin.locationcomponent.OnIndicatorPositionChangedListen
 import com.mapbox.maps.plugin.locationcomponent.location
 import java.lang.ref.WeakReference
 import java.util.Locale
+
 // TODO this is temp Map
 class LocationTrackingActivity : AppCompatActivity() {
 
     var db: FirebaseFirestore = FirebaseFirestore.getInstance()
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
     private val uid: String? = null
     private var city: String? = null
     private var postalCode: String? = null
@@ -83,9 +88,28 @@ class LocationTrackingActivity : AppCompatActivity() {
         locationPermissionHelper.checkPermissions {
             onMapReady()
         }
+        fusedLocationClient.lastLocation
+            .addOnSuccessListener { location: Location? ->
+                if (location != null) {
+                    val latitude = location.latitude
+                    val longitude = location.longitude
+                    val text = geocoder?.getFromLocation(latitude, longitude, 1)?.get(0)?.adminArea;
+                    mLocationText?.setText(text);
+                    // Use the latitude and longitude
+                    Toast.makeText(
+                        this,
+                        "Latitude: $latitude, Longitude: $longitude",
+                        Toast.LENGTH_LONG
+                    ).show()
+                } else {
+                    Toast.makeText(this, "Location not available", Toast.LENGTH_LONG).show()
+                }
+            }
     }
 
     private fun init() {
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+
         mIntentKey = intent.getStringExtra("INT")
         db = FirebaseFirestore.getInstance()
         //  uid = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getUid();
@@ -152,7 +176,7 @@ class LocationTrackingActivity : AppCompatActivity() {
                     applicationContext,
                     CheckoutActivity::class.java
                 )
-                intent.putExtra("total", Txttotal!!.text.toString())
+                intent.putExtras(getIntent().extras!!);
                 startActivity(intent)
                 finish()
             }

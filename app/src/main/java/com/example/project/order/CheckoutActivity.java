@@ -58,7 +58,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
     private long orderID;
     public String totalTxt;
     TextView mAmountText;
-    String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXVyYXZ5YWRhdjE5NThAZ21haWwuY29tIiwiZXhwIjoxNzI5MjQzNjM0LCJpYXQiOjE3MjkyMzY0MzR9.57409oUThu3OdEU9s2p9ikNXQWhPKirA2PEwVDh76RpCKBAAPD8P2DGnTv2nyIX2lAckpH_uFAHNorw8EmLZ0w";
+    String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXVyYXZ5YWRhdjE5NThAZ21haWwuY29tIiwiZXhwIjoxNzI5MzUwNzEzLCJpYXQiOjE3MjkzNDM1MTN9.omLNYxiImz0PpbZB5Z4y0dOFVoVi7iCLrrUTbOoipyPTvfNathyqvQJt11CjR8tNEuavxG5Hq6g3-brStUDAXg";
 
     Retrofit orderRetrofit = new Retrofit.Builder()
             .baseUrl("http://10.0.2.2:8080/")
