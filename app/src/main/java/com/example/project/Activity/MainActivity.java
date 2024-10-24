@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
             .build();
 
     Retrofit restaurantRetrofit = new Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
+            .baseUrl("https://delivery-app-1-0.onrender.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 

@@ -58,10 +58,10 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
     private long orderID;
     public String totalTxt;
     TextView mAmountText;
-    String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJzYXVyYXZ5YWRhdjE5NThAZ21haWwuY29tIiwiZXhwIjoxNzI5MzUwNzEzLCJpYXQiOjE3MjkzNDM1MTN9.omLNYxiImz0PpbZB5Z4y0dOFVoVi7iCLrrUTbOoipyPTvfNathyqvQJt11CjR8tNEuavxG5Hq6g3-brStUDAXg";
+    String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5pc2hAZ21haWwuY29tIiwiZXhwIjoxNzI5Njc1NjMzLCJpYXQiOjE3Mjk2Njg0MzN9.JHR2wZ9XZxv4NXeE24517MbGioqr8Zr1344_4oN6FY-5Ij9vgHaDLw4NOTlBoqYS9u6V5Cckhmg2H9smLUxXJA";
 
     Retrofit orderRetrofit = new Retrofit.Builder()
-            .baseUrl("http://10.0.2.2:8080/")
+            .baseUrl("https://delivery-app-1-0.onrender.com/")
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
