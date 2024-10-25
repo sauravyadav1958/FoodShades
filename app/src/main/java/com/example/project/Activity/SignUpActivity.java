@@ -13,9 +13,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.project.Models.Users;
+import com.example.project.Adapter.ApiService;
+import com.example.project.Models.User;
 import com.example.project.R;
 import com.example.project.databinding.ActivitySignUpBinding;
+import com.example.project.utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -29,6 +31,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.JsonObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class SignUpActivity extends AppCompatActivity {
 
@@ -40,6 +52,11 @@ public class SignUpActivity extends AppCompatActivity {
     Button googleBtn;
     private static final int RC_SIGN_IN = 9001;
     private GoogleSignInClient mGoogleSignInClient;
+
+    Retrofit signUpRetrofit = new Retrofit.Builder()
+            .baseUrl(Utils.hostname)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -97,17 +114,41 @@ public class SignUpActivity extends AppCompatActivity {
                                 progressDialog.dismiss();
 
                                 if (task.isSuccessful()) {
-                                    Users user = new Users(binding.editTextTextPersonName.getText().toString(), binding.editTextTextEmailAddress.getText().toString(),
-                                            binding.editTextTextPassword2.getText().toString(), binding.editTextPhone.getText().toString());
+                                    User user = new User(binding.firstName.getText().toString(), binding.editTextTextEmailAddress.getText().toString(),
+                                            binding.editTextTextPassword2.getText().toString(), binding.lastName.getText().toString());
 
 
                                     FirebaseUser user1 = FirebaseAuth.getInstance().getCurrentUser();
                                     String currentUserid = user1.getUid();
                                     database.getReference().child("Users").child(currentUserid).setValue(user);
 
-                                    /*database = FirebaseDatabase.getInstance();*/
+                                    String firstName = binding.firstName.getText().toString();
+                                    String lastName = binding.lastName.getText().toString();
+                                    String emailId = binding.editTextTextEmailAddress.getText().toString();
+                                    String password = binding.editTextTextPassword2.getText().toString();
 
-                                    Toast.makeText(SignUpActivity.this, "Sign Up Successfully", Toast.LENGTH_LONG).show();
+                                    Map<String, String> body = new HashMap<>();
+                                    body.put("firstName", firstName);
+                                    body.put("lastName", lastName);
+                                    body.put("emailId", emailId);
+                                    body.put("password", password);
+
+                                    ApiService apiService = signUpRetrofit.create(ApiService.class);
+                                    Call<JsonObject> jwtLoginResponseJsonObject = apiService.userSignUp(body);
+                                    jwtLoginResponseJsonObject.enqueue(new Callback<JsonObject>() {
+                                        @Override
+                                        public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                                            JsonObject jsonObject = response.body();
+                                            /*database = FirebaseDatabase.getInstance();*/
+                                            Toast.makeText(SignUpActivity.this, "Sign Up Successfully", Toast.LENGTH_LONG).show();
+                                            startActivity(new Intent(SignUpActivity.this, LoginActivity.class));
+                                        }
+
+                                        @Override
+                                        public void onFailure(Call<JsonObject> call, Throwable t) {
+                                            Toast.makeText(SignUpActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                                        }
+                                    });
                                 } else {
                                     Toast.makeText(SignUpActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                                 }

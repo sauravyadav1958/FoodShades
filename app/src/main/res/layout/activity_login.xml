@@ -149,7 +149,8 @@
                         android:gravity="center"
                         android:padding="15dp"
                         android:text="Google"
-                        android:textColor="#FBF9F9" >
+                        android:textColor="#FBF9F9"
+                        android:visibility="gone">
                     </Button>
                 </LinearLayout>
                 <LinearLayout

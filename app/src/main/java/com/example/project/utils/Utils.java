@@ -1,6 +1,9 @@
 package com.example.project.utils;
 
 public class Utils {
+    public static String hostname = "https://delivery-app-1-0.onrender.com/";
+//    "http://10.0.2.2:8080/"
+//    "https://delivery-app-1-0.onrender.com/"
     public static String restaurants = "[\n" +
             "  {\n" +
             "    \"restaurantId\": 1,\n" +

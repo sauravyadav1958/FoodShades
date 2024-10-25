@@ -1,34 +1,34 @@
 package com.example.project.Models;
 
-public class Users
+public class User
         {
-    String username, mail, password, UserID, number;
+    String firstName, mail, password, UserID, lastName;
 
-            public Users( String username, String mail, String password, String UserID, String number) {
+            public User(String firstName, String mail, String password, String UserID, String lastName) {
 
-                this.username = username;
+                this.firstName = firstName;
                 this.mail = mail;
                 this.password = password;
                 this.UserID = UserID;
-                this.number = number;
+                this.lastName = lastName;
             }
-            public Users(){}
+            public User(){}
 
-            public Users(String username, String mail, String password, String number) {
+            public User(String firstName, String mail, String password, String lastName) {
 
-                this.username = username;
+                this.firstName = firstName;
                 this.mail = mail;
                 this.password = password;
-                this.number = number;
+                this.lastName = lastName;
             //    this.UserID = UserID;
             }
 
 
-         public String getNumber() {
-             return number;
+         public String getLastName() {
+             return lastName;
            }
-            public void setNumber(String number) {
-                this.number = number;
+            public void setLastName(String lastName) {
+                this.lastName = lastName;
             }
 
           public String getUserID() {
@@ -38,11 +38,11 @@ public class Users
                 this.UserID = userID;
             }
 
-            public String getUsername() {
-                return username;
+            public String getFirstName() {
+                return firstName;
             }
-            public void setUsername(String username) {
-                this.username = username;
+            public void setFirstName(String firstName) {
+                this.firstName = firstName;
             }
 
             public String getMail() {

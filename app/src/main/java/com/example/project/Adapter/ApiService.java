@@ -26,4 +26,8 @@ public interface ApiService {
 
     @GET("getRestaurant/{restaurantId}")
     Call<JsonObject> getRestaurant(@Path("restaurantId") Long restaurantId);
+    @POST("jwtLogin")
+    Call<JsonObject> getJwtToken(@Body Map<String, String> map);
+    @POST("user/signUp")
+    Call<JsonObject> userSignUp(@Body Map<String, String> map);
 }

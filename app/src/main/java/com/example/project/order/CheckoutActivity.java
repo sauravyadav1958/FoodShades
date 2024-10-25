@@ -17,10 +17,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.example.project.Activity.LoginActivity;
 import com.example.project.Adapter.ApiService;
 import com.example.project.R;
 import com.example.project.utils.GenerateRandomNum;
 import com.example.project.utils.JSONParser;
+import com.example.project.utils.Utils;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.gson.JsonObject;
 import com.razorpay.Checkout;
@@ -58,10 +61,10 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
     private long orderID;
     public String totalTxt;
     TextView mAmountText;
-    String token = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJtYW5pc2hAZ21haWwuY29tIiwiZXhwIjoxNzI5Njc1NjMzLCJpYXQiOjE3Mjk2Njg0MzN9.JHR2wZ9XZxv4NXeE24517MbGioqr8Zr1344_4oN6FY-5Ij9vgHaDLw4NOTlBoqYS9u6V5Cckhmg2H9smLUxXJA";
+    String token = "";
 
     Retrofit orderRetrofit = new Retrofit.Builder()
-            .baseUrl("https://delivery-app-1-0.onrender.com/")
+            .baseUrl(Utils.hostname)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
@@ -149,13 +152,27 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
 
         Map<String, Object> map = new HashMap();
         bundle.keySet().forEach(k -> map.put(k, bundle.get(k)));
+        JsonObject jsonObject = LoginActivity.jwtToken;
+        if (jsonObject != null) {
+            token = jsonObject.getAsJsonPrimitive("accessToken").getAsString();
+        }
         Call<JsonObject> orderJsonObject = apiService.placeOrder("Bearer " + token, map);
         orderJsonObject.enqueue(new Callback<JsonObject>() {
             @Override
             public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
-                JsonObject orderTicket = response.body();
+                if (response.code() == 401) {
+                    Checkout.clearUserData(getApplicationContext());
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    auth.signOut();
+                    FirebaseAuth.getInstance().signOut();
+                    Intent intent = new Intent(CheckoutActivity.this, LoginActivity.class);
+                    startActivity(intent);
+                    finish();
+                } else {
+                    JsonObject orderTicket = response.body();
 
-                razorpayCheckout("Razorpay", orderTicket);
+                    razorpayCheckout("Razorpay", orderTicket);
+                }
             }
 
             @Override

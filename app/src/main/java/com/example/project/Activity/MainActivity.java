@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
             .build();
 
     Retrofit restaurantRetrofit = new Retrofit.Builder()
-            .baseUrl("https://delivery-app-1-0.onrender.com/")
+            .baseUrl(Utils.hostname)
             .addConverterFactory(GsonConverterFactory.create())
             .build();
 
@@ -67,7 +67,8 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
         orderNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, CartListActivity.class));
+                Intent intent = new Intent(MainActivity.this, CartListActivity.class);
+                startActivity(intent);
             }
         });
         loadRestaurants();

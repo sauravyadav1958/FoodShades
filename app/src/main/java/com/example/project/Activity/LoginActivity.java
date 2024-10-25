@@ -13,8 +13,10 @@ import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.project.Adapter.ApiService;
 import com.example.project.R;
 import com.example.project.databinding.ActivityLoginBinding;
+import com.example.project.utils.Utils;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -29,6 +31,16 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.gson.JsonObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 
 public class LoginActivity extends AppCompatActivity {
@@ -43,11 +55,17 @@ public class LoginActivity extends AppCompatActivity {
     private GoogleApiClient googleApiClient;
     EditText editTextTextEmailAddress;
     EditText editTextTextPassword2;
+    public static JsonObject jwtToken;
 
 
     ActivityLoginBinding binding;
     ProgressDialog progressDialog;
     FirebaseDatabase database;
+
+    Retrofit jwtLoginRetrofit = new Retrofit.Builder()
+            .baseUrl(Utils.hostname)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build();
 
     //*MADE WITH LOVE BY ADESH
 
@@ -120,9 +138,29 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         progressDialog.dismiss();
                         if (task.isSuccessful()) {
-                            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
-                            Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
-                            startActivity(intent);
+                            String userName = binding.editTextTextEmailAddress.getText().toString();
+                            String password = binding.editTextTextPassword2.getText().toString();
+
+                            Map<String, String> body = new HashMap<>();
+                            body.put("username", userName);
+                            body.put("password", password);
+                            ApiService apiService = jwtLoginRetrofit.create(ApiService.class);
+                            Call<JsonObject> jwtLoginResponseJsonObject = apiService.getJwtToken(body);
+                            jwtLoginResponseJsonObject.enqueue(new Callback<JsonObject>() {
+                                @Override
+                                public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
+                                    jwtToken = response.body();
+                                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                                    Toast.makeText(LoginActivity.this, "Login Successful", Toast.LENGTH_SHORT).show();
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onFailure(Call<JsonObject> call, Throwable t) {
+                                    Toast.makeText(LoginActivity.this, t.getMessage(), Toast.LENGTH_LONG).show();
+                                }
+                            });
+
                         } else {
                             Toast.makeText(LoginActivity.this, task.getException().getMessage(), Toast.LENGTH_LONG).show();
                         }
