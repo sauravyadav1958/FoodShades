@@ -152,7 +152,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
 
             @Override
             public void onFailure(Call<JsonArray> call, Throwable t) {
-                getOfflineRestaurants();
+//                getOfflineRestaurants();
             }
         });
 
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity implements RestaurantAdapter
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-                getOfflineFoodItems(restaurantId);
+//                getOfflineFoodItems(restaurantId);
             }
         });
     }

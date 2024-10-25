@@ -177,7 +177,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
 
             @Override
             public void onFailure(Call<JsonObject> call, Throwable t) {
-//                        getOfflineRestaurants();
+
             }
         });
     }
